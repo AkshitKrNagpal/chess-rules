@@ -1,6 +1,6 @@
 'use strict';
 var assert = require('assert');
-var chessRules = require('../');
+var chessRules = require('../src');
 
 describe('chess-rules node module', function () {
     it('must provide initial game position', function () {

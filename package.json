@@ -11,7 +11,7 @@
   "repository": "alcibiade/chess-rules",
   "license": "MIT",
   "files": [
-    "index.js"
+    "src/index.js"
   ],
   "keywords": [
     "chess-rules",
