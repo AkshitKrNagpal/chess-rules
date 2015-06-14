@@ -1,4 +1,9 @@
 'use strict';
-module.exports = function (str) {
-  console.log(str || 'Rainbow');
+
+var chessRules = {
+    getInitialPosition: function () {
+        return {};
+    }
 };
+
+module.exports = chessRules;
