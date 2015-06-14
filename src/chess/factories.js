@@ -2,11 +2,12 @@
 
 
 function pieceFactory(piece, side) {
-    return {piece: piece, side: side};
+    return {type: piece, side: side};
 }
 
 function getInitialPosition() {
     return {
+        turn: 'W',
         castlingFlags: ['wk', 'wq', 'bk', 'bq'],
 
         lastPawnMoveColumn: null,
