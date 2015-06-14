@@ -125,9 +125,11 @@ function getAvailableMoves(position) {
 
         if (piece != null && piece.side === position.turn) {
             var targets = pieceDestinationsEvaluator[piece.type](position, coord);
-            availableMoves = availableMoves.concat(targets);
-        }
 
+            targets.forEach(function (dest) {
+                availableMoves.push({src: coord.offset, dst: dest.offset});
+            });
+        }
     }
 
     return availableMoves;

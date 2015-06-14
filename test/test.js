@@ -35,7 +35,7 @@ describe('chess-rules module', function () {
         assert.equal(position.lastPawnMoveColumn, null);
     });
 
-    it('must implement conistent Pawn movement', function () {
+    it('must implement consistent Pawn movement', function () {
         var position = createEmptyBoard();
         position.board[28] = {type: 'P', side: 'W'};
         var moves = chessRules.getAvailableMoves(position);

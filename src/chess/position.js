@@ -58,6 +58,5 @@ function getInitialPosition() {
 }
 
 module.exports = {
-    pieceFactory: pieceFactory,
     initialPositionFactory: getInitialPosition
 };

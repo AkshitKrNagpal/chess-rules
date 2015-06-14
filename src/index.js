@@ -1,6 +1,6 @@
 'use strict';
 
-var factories = require('./chess/factories');
+var factories = require('./chess/position');
 
 var moves = require('./chess/moves');
 
