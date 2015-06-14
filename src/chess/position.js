@@ -5,6 +5,15 @@ function pieceFactory(piece, side) {
     return {type: piece, side: side};
 }
 
+function clone(position) {
+    return {
+        turn: position.turn,
+        castlingFlags: position.castlingFlags.slice(0),
+        lastPawnMoveColumn: position.lastPawnMoveColumn,
+        board: position.board.slice(0)
+    };
+}
+
 function getInitialPosition() {
     return {
         turn: 'W',
@@ -58,5 +67,6 @@ function getInitialPosition() {
 }
 
 module.exports = {
-    initialPositionFactory: getInitialPosition
+    initialPositionFactory: getInitialPosition,
+    clone: clone
 };

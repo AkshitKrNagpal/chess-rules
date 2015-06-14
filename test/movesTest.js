@@ -12,6 +12,18 @@ function createEmptyBoard() {
     return position;
 }
 
+function contains(l, item) {
+    var result = false;
+
+    for (var i = 0; i < l.length; i++) {
+        if (l[i].src === item.src && l[i].dst === item.dst) {
+            result = true;
+            break;
+        }
+    }
+
+    return result;
+}
 
 describe('moves module', function () {
 
@@ -33,6 +45,9 @@ describe('moves module', function () {
         var position = chessRules.getInitialPosition();
         var moves = chessRules.getAvailableMoves(position);
         assert.equal(moves.length, 20);
+        assert(contains(moves, {src: 12, dst: 20}));
+        assert(contains(moves, {src: 12, dst: 28}));
     });
 
 });
+
