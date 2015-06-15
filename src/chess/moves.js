@@ -34,6 +34,29 @@ function isFreeOrOpponent(position, coord) {
         || position.turn !== piece.side;
 }
 
+function iterateMovementInDirection(position, coord, direction, destinations) {
+    var c = coord;
+
+    while (true) {
+        c = c.add(direction);
+
+        if (!c.isValid()) {
+            break;
+        }
+
+        if (isFree(position, c)) {
+            destinations.push(c);
+        } else {
+            if (isOpponent(position, c)) {
+                destinations.push(c);
+            }
+
+            break;
+        }
+    }
+}
+
+
 /*
  * Piece movement logic
  */
@@ -96,19 +119,71 @@ pieceDestinationsEvaluator.N = function (position, coord) {
 };
 
 pieceDestinationsEvaluator.B = function (position, coord) {
-    return [];
+    var destinations = [];
+
+    [
+        new Coord(-1, -1),
+        new Coord(-1, 1),
+        new Coord(1, -1),
+        new Coord(1, 1)
+    ].forEach(function (direction) {
+            iterateMovementInDirection(position, coord, direction, destinations);
+        });
+
+    return destinations;
 };
 
 pieceDestinationsEvaluator.R = function (position, coord) {
-    return [];
+    var destinations = [];
+
+    [
+        new Coord(-1, 0),
+        new Coord(1, 0),
+        new Coord(0, -1),
+        new Coord(0, 1)
+    ].forEach(function (direction) {
+            iterateMovementInDirection(position, coord, direction, destinations);
+        });
+
+    return destinations;
 };
 
 pieceDestinationsEvaluator.K = function (position, coord) {
-    return [];
+    var destinations = [];
+
+    for (var dx = -1; dx < 2; dx++) {
+        for (var dy = -1; dy < 2; dy++) {
+            if (dx != 0 || dy != 0) {
+                var delta = new Coord(dx, dy);
+                var dest = coord.add(delta);
+
+                if (isFreeOrOpponent(position, dest)) {
+                    destinations.push(dest);
+                }
+            }
+        }
+    }
+
+    return destinations;
 };
 
 pieceDestinationsEvaluator.Q = function (position, coord) {
-    return [];
+    var destinations = [];
+
+    [
+        new Coord(-1, 0),
+        new Coord(1, 0),
+        new Coord(0, -1),
+        new Coord(0, 1),
+        new Coord(-1, -1),
+        new Coord(-1, 1),
+        new Coord(1, -1),
+        new Coord(1, 1)
+    ].forEach(function (direction) {
+            iterateMovementInDirection(position, coord, direction, destinations);
+        });
+
+    return destinations;
 };
 
 /*

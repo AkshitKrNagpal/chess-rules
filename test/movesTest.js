@@ -34,11 +34,39 @@ describe('moves module', function () {
         assert.equal(moves.length, 1);
     });
 
-    it('must implement conistent Knight movement', function () {
+    it('must implement consistent Knight movement', function () {
         var position = createEmptyBoard();
         position.board[28] = {type: 'N', side: 'W'};
         var moves = chessRules.getAvailableMoves(position);
         assert.equal(moves.length, 8);
+    });
+
+    it('must implement consistent Bishop movement', function () {
+        var position = createEmptyBoard();
+        position.board[28] = {type: 'B', side: 'W'};
+        var moves = chessRules.getAvailableMoves(position);
+        assert.equal(moves.length, 13);
+    });
+
+    it('must implement consistent Rook movement', function () {
+        var position = createEmptyBoard();
+        position.board[0] = {type: 'R', side: 'W'};
+        var moves = chessRules.getAvailableMoves(position);
+        assert.equal(moves.length, 14);
+    });
+
+    it('must implement consistent Queen movement', function () {
+        var position = createEmptyBoard();
+        position.board[0] = {type: 'Q', side: 'W'};
+        var moves = chessRules.getAvailableMoves(position);
+        assert.equal(moves.length, 21);
+    });
+
+    it('must implement consistent K movement', function () {
+        var position = createEmptyBoard();
+        position.board[0] = {type: 'K', side: 'W'};
+        var moves = chessRules.getAvailableMoves(position);
+        assert.equal(moves.length, 3);
     });
 
     it('must provide available moves list', function () {
