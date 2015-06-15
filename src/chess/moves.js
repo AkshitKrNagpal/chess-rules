@@ -1,6 +1,7 @@
 'use strict';
 
 var coordinates = require('./coordinates');
+var updates = require('./updates');
 
 var Coord = coordinates.BoardCoordinates;
 
@@ -56,6 +57,19 @@ function iterateMovementInDirection(position, coord, direction, destinations) {
     }
 }
 
+function findPiece(position, pieceType, pieceSide) {
+    var result = null;
+
+    for (var offset = 0; offset < 64; offset++) {
+        var piece = position.board[offset];
+        if (piece != null && piece.type === pieceType && piece.side === pieceSide) {
+            result = offset;
+            break;
+        }
+    }
+
+    return result;
+}
 
 /*
  * Piece movement logic
@@ -190,8 +204,8 @@ pieceDestinationsEvaluator.Q = function (position, coord) {
  * Exported functions
  */
 
-function getAvailableMoves(position) {
-
+function computeAllMoves(position) {
+    // Compute possible moves based only on piece movement.
     var availableMoves = [];
 
     for (var offset = 0; offset <= 64; offset++) {
@@ -208,6 +222,35 @@ function getAvailableMoves(position) {
     }
 
     return availableMoves;
+}
+
+function getAvailableMoves(position) {
+
+    var availableMoves = computeAllMoves(position);
+
+    // Prune moves that would lead to a check situation.
+
+    var legalmoves = [];
+
+
+    availableMoves.forEach(function (move) {
+        var updatedPosition = updates.applyMove(position, move);
+        var opponentMoves = computeAllMoves(updatedPosition);
+        var kingOffset = findPiece(updatedPosition, 'K', position.turn);
+        var kingThreat = false;
+
+        opponentMoves.forEach(function (move) {
+            if (move.dst == kingOffset) {
+                kingThreat = true;
+            }
+        });
+
+        if (!kingThreat) {
+            legalmoves.push(move);
+        }
+    });
+
+    return legalmoves;
 }
 
 module.exports = {

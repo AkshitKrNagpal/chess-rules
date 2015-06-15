@@ -77,5 +77,22 @@ describe('moves module', function () {
         assert(contains(moves, {src: 12, dst: 28}));
     });
 
+    it('must forbid King movements that would jeopardize him', function () {
+        var position = createEmptyBoard();
+        position.board[0] = {type: 'K', side: 'W'};
+        position.board[15] = {type: 'R', side: 'B'};
+        var moves = chessRules.getAvailableMoves(position);
+        assert.equal(moves.length, 1);
+    });
+
+    it('must forbid piece movements that would uncover King', function () {
+        var position = createEmptyBoard();
+        position.board[0] = {type: 'K', side: 'W'};
+        position.board[3] = {type: 'R', side: 'W'};
+        position.board[7] = {type: 'R', side: 'B'};
+        var moves = chessRules.getAvailableMoves(position);
+        assert.equal(moves.length, 9);
+    });
+
 });
 
