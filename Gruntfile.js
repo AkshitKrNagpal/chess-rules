@@ -6,6 +6,7 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     jshint: {
       options: {
         jshintrc: '.jshintrc',
@@ -19,6 +20,25 @@ module.exports = function (grunt) {
       },
       test: {
         src: ['test/**/*.js']
+      }
+    },
+    concat: {
+      options: {
+        banner: '<%= banner %>',
+        stripBanners: true
+      },
+      dist: {
+        src: ['src/**/*.js'],
+        dest: 'dist/<%= pkg.name %>.js'
+      }
+    },
+    uglify: {
+      options: {
+        banner: '<%= banner %>'
+      },
+      dist: {
+        src: '<%= concat.dist.dest %>',
+        dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
     mochacli: {
@@ -44,5 +64,5 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('default', ['jshint', 'mochacli']);
+  grunt.registerTask('default', ['jshint', 'mochacli', 'concat', 'uglify']);
 };

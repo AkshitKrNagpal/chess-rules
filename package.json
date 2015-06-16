@@ -15,7 +15,7 @@
   ],
   "keywords": [
     "chess-rules",
-    ""
+    "chess", "game", "rules"
   ],
   "dependencies": {},
   "devDependencies": {
@@ -24,6 +24,8 @@
     "grunt-contrib-jshint": "^0.11.0",
     "grunt-contrib-nodeunit": "^0.4.1",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-uglify": "^0.7.0",
     "grunt-mocha-cli": "^1.12.0",
     "jshint-stylish": "^1.0.1",
     "load-grunt-tasks": "^3.1.0",
