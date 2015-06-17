@@ -23,7 +23,15 @@ module.exports = function (grunt) {
       }
     },
     browserify: {
-        'dist/chess-rules.js': ['src/**/*.js']
+        options: {
+            alias: {
+                'rules': './src/index.js'
+            }
+        },
+        dist: {
+            src: 'src/index.js',
+            dest: 'dist/<%= pkg.name %>.js'
+        }
     },
     uglify: {
       options: {
