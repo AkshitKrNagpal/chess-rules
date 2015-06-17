@@ -22,22 +22,15 @@ module.exports = function (grunt) {
         src: ['test/**/*.js']
       }
     },
-    concat: {
-      options: {
-        banner: '<%= banner %>',
-        stripBanners: true
-      },
-      dist: {
-        src: ['src/**/*.js'],
-        dest: 'dist/<%= pkg.name %>.js'
-      }
+    browserify: {
+        'dist/chess-rules.js': ['src/**/*.js']
     },
     uglify: {
       options: {
         banner: '<%= banner %>'
       },
       dist: {
-        src: '<%= concat.dist.dest %>',
+        src: 'dist/chess-rules.js',
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
@@ -64,5 +57,5 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('default', ['jshint', 'mochacli', 'concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'mochacli', 'browserify', 'uglify']);
 };
