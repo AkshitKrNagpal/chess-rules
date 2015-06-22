@@ -66,7 +66,36 @@ function getInitialPosition() {
     };
 }
 
+function positionToString(position) {
+    var strings = [];
+    strings.push(position.turn == 'W' ? 'WHITE' : 'BLACK');
+    strings.push(' ');
+    strings.push(position.castlingFlags[0] == 'wk' ? 'K' : '');
+    strings.push(position.castlingFlags[1] == 'wq' ? 'Q' : '');
+    strings.push(position.castlingFlags[2] == 'bk' ? 'k' : '');
+    strings.push(position.castlingFlags[3] == 'bq' ? 'q' : '');
+
+    var row;
+    var col;
+    for (row = 7; row >= 0; row--) {
+        strings.push('\n');
+        for (col = 0; col < 8; col++) {
+            var currentPiece = position.board[row * 8 + col];
+            if (currentPiece == null) {
+                strings.push('.');
+            } else if (currentPiece.side == 'W') {
+                strings.push(currentPiece.type.toUpperCase());
+            } else {
+                strings.push(currentPiece.type.toLowerCase());
+            }
+            strings.push(' ');
+        }
+    }
+    return strings.join('');
+}
+
 module.exports = {
     initialPositionFactory: getInitialPosition,
+    positionToString: positionToString,
     clone: clone
 };
