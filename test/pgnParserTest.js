@@ -1,7 +1,6 @@
 'use strict';
 var assert = require('assert');
 var parser = require('../src/chess/pgnParser');
-var position = require('../src/chess/position');
 
 describe('pgn parser module', function () {
 
