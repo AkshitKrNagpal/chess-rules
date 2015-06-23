@@ -25,7 +25,7 @@ module.exports = function (grunt) {
     browserify: {
         options: {
             alias: {
-                'rules': './src/index.js'
+                'chess-rules': './src/index.js'
             }
         },
         dist: {
