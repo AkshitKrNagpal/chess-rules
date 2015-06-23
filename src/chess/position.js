@@ -95,7 +95,7 @@ function positionToString(position) {
 }
 
 module.exports = {
-    initialPositionFactory: getInitialPosition,
+    getInitialPosition: getInitialPosition,
     positionToString: positionToString,
     clone: clone
 };

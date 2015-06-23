@@ -8,7 +8,7 @@ function computeDiffs(position, move) {
     var destinationPiece = position.board[move.dst];
 
     if (destinationPiece != null) {
-        diffs.push({action: 'remove', src: move.src});
+        diffs.push({action: 'remove', src: move.dst});
     }
 
     diffs.push({action: 'move', src: move.src, dst: move.dst});

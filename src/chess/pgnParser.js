@@ -1,10 +1,13 @@
 'use strict';
 
+var CHARCODE_A = 'a'.charCodeAt(0);
+var CHARCODE_1 = '1'.charCodeAt(0);
+
 function computeOffset(pgn, cursor) {
     var offs = 0;
 
-    offs += pgn.charCodeAt(cursor) - 'a'.charCodeAt(0);
-    offs += (pgn.charCodeAt(cursor + 1) - '1'.charCodeAt(0)) * 8;
+    offs += pgn.charCodeAt(cursor) - CHARCODE_A;
+    offs += (pgn.charCodeAt(cursor + 1) - CHARCODE_1) * 8;
 
     return offs;
 }
@@ -12,26 +15,74 @@ function computeOffset(pgn, cursor) {
 function parsePgnMove(pgn) {
     var fields = {
         type: null,
-        src: null,
+        srcCol: null,
+        srcRow: null,
         dst: null,
-        promotion: null
+        promotion: null,
+        capture: false,
+        checking: false,
+        mate: false
     };
 
+    // Coodinates are bound by a cursor offset to the left and a payload length
     var cursor = 0;
+    var length = pgn.length;
 
-    // Piece type prefix
+    // Piece type prefix will shift cursor
 
     if (['P', 'R', 'N', 'B', 'K', 'Q'].indexOf(pgn[cursor]) != -1) {
         fields.type = pgn[cursor];
         cursor++;
+    } else {
+        fields.type = 'P';
     }
 
-    if (pgn[cursor] === 'x') {
-        cursor++;
+    // Checking, mate and promotions will decrease length
+
+    var checkingIndex = pgn.indexOf('+');
+    var mateIndex = pgn.indexOf('#');
+    var promotionIndex = pgn.indexOf('=');
+
+    if (checkingIndex >= 0) {
+        fields.checking = true;
+        length = checkingIndex;
     }
 
-    fields.dst = computeOffset(pgn, cursor);
+    if (mateIndex >= 0) {
+        fields.mate = true;
+        length = mateIndex;
+    }
 
+    if (promotionIndex >= 0) {
+        fields.promotion = pgn.substring(promotionIndex + 1, promotionIndex + 2);
+        length = promotionIndex;
+    }
+
+    // Now the destination is at the right of the payload
+
+    fields.dst = computeOffset(pgn, length - 2);
+    length -= 2;
+
+    if (pgn[length - 1] === 'x') {
+        length -= 1;
+        fields.capture = true;
+    }
+
+    // Only src col/row hints should remain
+
+    for (var i = cursor; i < length; i++) {
+        var c = pgn.charCodeAt(cursor);
+        var row = c - CHARCODE_1;
+        var col = c - CHARCODE_A;
+
+        if (row >= 0 && row < 8) {
+            fields.srcRow = row;
+        }
+
+        if (col >= 0 && col < 8) {
+            fields.srcCol = col;
+        }
+    }
 
     return fields;
 }

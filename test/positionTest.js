@@ -5,7 +5,7 @@ var positions = require('../src/chess/position');
 describe('position module', function () {
 
     it('must provide initial game position', function () {
-        var position = positions.initialPositionFactory();
+        var position = positions.getInitialPosition();
         assert.equal(position.board.length, 64);
         assert.equal(position.turn, 'W');
         assert.equal(position.castlingFlags.length, 4);
@@ -13,14 +13,14 @@ describe('position module', function () {
     });
 
     it('must be able to clone a position', function () {
-        var position = positions.initialPositionFactory();
+        var position = positions.getInitialPosition();
         var clone = positions.clone(position);
         assert.deepEqual(clone, position);
         assert.notStrictEqual(clone, position);
     });
 
     it('must display board positions and turn', function () {
-        var position = positions.initialPositionFactory();
+        var position = positions.getInitialPosition();
         var positionStr = positions.positionToString(position);
         var positionStrArray = positionStr.split('\n');
         assert.equal(positionStrArray.length, 9);

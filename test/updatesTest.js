@@ -20,17 +20,17 @@ describe('updates module', function () {
         // e4
         var position2 = chessRules.applyMove(position1, {src: 12, dst: 28});
         assert.equal(position2.board[12], null);
-        assert.equal(position2.board[28], position1.board[12]);
+        assert.equal(position2.board[28].type, 'P');
 
         // d5
         var position3 = chessRules.applyMove(position2, {src: 51, dst: 35});
         assert.equal(position3.board[51], null);
-        assert.equal(position3.board[35], position1.board[51]);
+        assert.equal(position3.board[35].type, 'P');
 
         // exd5
-        var position4 = chessRules.applyMove(position2, {src: 28, dst: 35});
+        var position4 = chessRules.applyMove(position3, {src: 28, dst: 35});
         assert.equal(position4.board[28], null);
-        assert.equal(position4.board[35], position1.board[12]);
+        assert.equal(position4.board[35].type, 'P');
 
     });
 });

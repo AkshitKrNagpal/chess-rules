@@ -6,7 +6,7 @@ var updates = require('./chess/updates');
 var pgn = require('./chess/pgn');
 
 var chessRules = {
-    getInitialPosition: position.initialPositionFactory,
+    getInitialPosition: position.getInitialPosition,
     getAvailableMoves: moves.getAvailableMoves,
     applyMove: updates.applyMove,
     pgnToMove: pgn.pgnToMove,
