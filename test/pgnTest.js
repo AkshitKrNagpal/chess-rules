@@ -43,5 +43,19 @@ describe('pgn module', function () {
         assert.equal(bishopMove.src, 18);
     });
 
+
+    it('must be able to identify source by column', function () {
+        var position = chessRules.getInitialPosition();
+        // Add a black bishop at C3
+        position.board[18] = {type: 'B', side: 'B'};
+
+        // Two pawns can take it
+        var colBMove = chessRules.pgnToMove(position, "bxc3");
+        assert.equal(colBMove.src, 9);
+
+        var colDMove = chessRules.pgnToMove(position, "dxc3");
+        assert.equal(colDMove.src, 11);
+    });
+
 });
 
