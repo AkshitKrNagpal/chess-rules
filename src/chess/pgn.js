@@ -16,7 +16,7 @@ function pgnToMove(position, pgnMove) {
             return;
         }
 
-        if (m.dst == pgnFields.dst) {
+        if (m.dst == pgnFields.dst && position.board[m.src].type == pgnFields.type) {
             pgnFields.src = m.src;
         }
     });

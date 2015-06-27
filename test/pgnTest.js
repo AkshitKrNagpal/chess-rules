@@ -27,6 +27,21 @@ describe('pgn module', function () {
         assert.equal(position.board[27].side, 'B');
     });
 
+    it('must be able to identify source by piece type', function () {
+        var position = chessRules.getInitialPosition();
+        // Add a white bishop at C3
+        position.board[18] = {type: 'B', side: 'W'};
+
+        // Add a white knight at F3
+        position.board[21] = {type: 'N', side: 'W'};
+
+        // Both pieces can reach E5...
+        var knightMove = chessRules.pgnToMove(position, "Ne5");
+        assert.equal(knightMove.src, 21);
+
+        var bishopMove = chessRules.pgnToMove(position, "Be5");
+        assert.equal(bishopMove.src, 18);
+    });
 
 });
 
