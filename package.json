@@ -11,7 +11,7 @@
   "repository": "alcibiade/chess-rules",
   "license": "MIT",
   "files": [
-    "dist/*.js"
+    "dist/", "src/"
   ],
   "keywords": [
     "chess-rules",
@@ -19,6 +19,7 @@
     "game",
     "rules"
   ],
+  "main": "./src",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.0",
