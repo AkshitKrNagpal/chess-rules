@@ -24,10 +24,7 @@ module.exports = function (grunt) {
     },
     browserify: {
         options: {
-            alias: {
-                'chess-rules': './src/index.js'
-            }
-        },
+         },
         dist: {
             src: 'src/index.js',
             dest: 'dist/<%= pkg.name %>.js'
@@ -38,7 +35,7 @@ module.exports = function (grunt) {
         banner: '<%= banner %>'
       },
       dist: {
-        src: 'dist/chess-rules.js',
+        src: 'dist/<%= pkg.name %>.js',
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
