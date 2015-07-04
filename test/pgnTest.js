@@ -57,5 +57,18 @@ describe('pgn module', function () {
         assert.equal(colDMove.src, 11);
     });
 
+    it('must reject bogus entries', function () {
+        var position = chessRules.getInitialPosition();
+        assert.equal(chessRules.pgnToMove(position, "bdfasasd"), null);
+        assert.equal(chessRules.pgnToMove(position, "r3e5o6"), null);
+        assert.equal(chessRules.pgnToMove(position, ""), null);
+        assert.equal(chessRules.pgnToMove(position, "#@#$"), null);
+    });
+
+    it('must reject invalid moves', function () {
+        var position = chessRules.getInitialPosition();
+        assert.equal(chessRules.pgnToMove(position, "e5"), null);
+    });
+
 });
 

@@ -31,5 +31,10 @@ describe('pgn parser module', function () {
         assert.equal(fields.capture, true);
         assert.equal(fields.type, 'N');
     });
+
+    it('must parse bogus input', function () {
+        var fields = parser.parsePgnMove("asdfjasgj");
+        assert.equal(fields, null);
+    });
 });
 

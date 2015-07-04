@@ -4,10 +4,15 @@ var CHARCODE_A = 'a'.charCodeAt(0);
 var CHARCODE_1 = '1'.charCodeAt(0);
 
 function computeOffset(pgn, cursor) {
-    var offs = 0;
+    var offs = null;
 
-    offs += pgn.charCodeAt(cursor) - CHARCODE_A;
-    offs += (pgn.charCodeAt(cursor + 1) - CHARCODE_1) * 8;
+    var col = pgn.charCodeAt(cursor) - CHARCODE_A;
+    var row = (pgn.charCodeAt(cursor + 1) - CHARCODE_1);
+
+    if (col >= 0 && col < 8 && row >= 0 && row < 8) {
+        offs += col;
+        offs += row * 8;
+    }
 
     return offs;
 }
@@ -60,7 +65,15 @@ function parsePgnMove(pgn) {
 
     // Now the destination is at the right of the payload
 
-    fields.dst = computeOffset(pgn, length - 2);
+    var dstOffset = computeOffset(pgn, length - 2);
+
+    if (dstOffset) {
+        fields.dst = dstOffset;
+    } else {
+        // Reject invalid syntax here
+        return null;
+    }
+
     length -= 2;
 
     if (pgn[length - 1] === 'x') {
