@@ -70,5 +70,17 @@ describe('pgn module', function () {
         assert.equal(chessRules.pgnToMove(position, "e5"), null);
     });
 
+    it('must convert moves to pgn and back', function () {
+        var position = chessRules.getInitialPosition();
+
+        var moves = chessRules.getAvailableMoves(position);
+        moves.forEach(function (move) {
+            var movePgn = chessRules.moveToPgn(position, move);
+            console.log("Move:", move, "Pgn:", movePgn);
+            var moveFromPgn = chessRules.pgnToMove(position, movePgn);
+            assert.deepEqual(moveFromPgn, move);
+        });
+    });
+
 });
 

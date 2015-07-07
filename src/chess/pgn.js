@@ -3,6 +3,18 @@
 var chessMoves = require('./moves');
 var parser = require('./pgnParser');
 
+/**
+ * Convert an offset to a PGN coord: 0 -> a1, ... , 63 -> h8
+ */
+function coordToName(offset) {
+    var move = '';
+
+    move += String.fromCharCode('a'.charCodeAt(0) + (offset % 8));
+    move += String.fromCharCode('1'.charCodeAt(0) + Math.floor(offset / 8));
+
+    return move;
+}
+
 function pgnToMove(position, pgnMove) {
     var move = null;
 
@@ -32,8 +44,18 @@ function pgnToMove(position, pgnMove) {
     return move;
 }
 
-function moveToPgn() {
-    return null;
+function moveToPgn(position, move) {
+    var pgn = '';
+
+    var piece = position.board[move.src];
+    if (piece.type != 'P') {
+        pgn += piece.type;
+    }
+
+    pgn += coordToName(move.src);
+    pgn += coordToName(move.dst);
+
+    return pgn;
 }
 
 module.exports = {
