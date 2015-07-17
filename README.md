@@ -1,4 +1,4 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status](https://coveralls.io/repos/ChessCorp/chess-rules/badge.svg?branch=master&service=github)](https://coveralls.io/github/ChessCorp/chess-rules?branch=master)
 
 > Chess Rules implementation as a standalone module.
 
