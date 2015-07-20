@@ -39,12 +39,20 @@ module.exports = function (grunt) {
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
-    mochacli: {
-      options: {
-        reporter: 'nyan',
-        bail: true
+    mochacov: {
+      coverage: {
+        options: {
+          coveralls: true
+        }
       },
-      all: ['test/*.js']
+      test: {
+        options: {
+           reporter: 'spec'
+        }
+      },
+      options: {
+        files: 'test/*.js'
+      }
     },
     watch: {
       gruntfile: {
@@ -62,5 +70,7 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('default', ['jshint', 'mochacli', 'browserify', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'test', 'browserify', 'uglify']);
+  grunt.registerTask('test', ['mochacov:test']);
+  grunt.registerTask('travis', ['mochacov:coverage']);
 };
