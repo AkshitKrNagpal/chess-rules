@@ -23,11 +23,11 @@ function pgnToMove(position, pgnMove) {
     if (pgnFields) {
         var availableMoves = chessMoves.getAvailableMoves(position);
         availableMoves.forEach(function (m) {
-            if (pgnFields.srcCol && m.src % 8 != pgnFields.srcCol) {
+            if (pgnFields.srcCol != null && m.src % 8 != pgnFields.srcCol) {
                 return;
             }
 
-            if (pgnFields.srcRow && Math.floor(m.src / 8) != pgnFields.srcRow) {
+            if (pgnFields.srcRow != null && Math.floor(m.src / 8) != pgnFields.srcRow) {
                 return;
             }
 

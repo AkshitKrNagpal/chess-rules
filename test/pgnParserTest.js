@@ -36,5 +36,22 @@ describe('pgn parser module', function () {
         var fields = parser.parsePgnMove("asdfjasgj");
         assert.equal(fields, null);
     });
+
+    it('must parse check indicator', function () {
+        var fields = parser.parsePgnMove("Ra6+");
+        assert.equal(fields.checking, true);
+    });
+
+    it('must parse promotion piece type', function () {
+        var fields = parser.parsePgnMove("e8=Q");
+        assert.equal(fields.promotion, "Q");
+    });
+
+    it('must parse checkmate indicator', function () {
+        var fields = parser.parsePgnMove("e8=Q#");
+        assert.equal(fields.promotion, "Q");
+        assert.equal(fields.mate, true);
+        assert.equal(fields.checking, false);
+    });
 });
 

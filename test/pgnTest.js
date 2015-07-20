@@ -57,6 +57,21 @@ describe('pgn module', function () {
         assert.equal(colDMove.src, 11);
     });
 
+    it('must be able to identify source by row', function () {
+        var position = chessRules.getInitialPosition();
+        // Add a black bishop at C3
+        position.board[18] = {type: 'B', side: 'B'};
+        // Add a white knight at E4
+        position.board[28] = {type: 'N', side: 'W'};
+
+        // Two knights can take the bishop
+        var row1Move = chessRules.pgnToMove(position, "N1xc3");
+        assert.equal(row1Move.src, 1);
+
+        var row4Move = chessRules.pgnToMove(position, "N4xc3");
+        assert.equal(row4Move.src, 28);
+    });
+
     it('must reject bogus entries', function () {
         var position = chessRules.getInitialPosition();
         assert.equal(chessRules.pgnToMove(position, "bdfasasd"), null);
