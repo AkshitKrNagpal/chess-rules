@@ -76,7 +76,6 @@ describe('pgn module', function () {
         var moves = chessRules.getAvailableMoves(position);
         moves.forEach(function (move) {
             var movePgn = chessRules.moveToPgn(position, move);
-            console.log("Move:", move, "Pgn:", movePgn);
             var moveFromPgn = chessRules.pgnToMove(position, movePgn);
             assert.deepEqual(moveFromPgn, move);
         });
