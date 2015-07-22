@@ -13,6 +13,12 @@ function computeDiffs(position, move) {
 
     diffs.push({action: 'move', src: move.src, dst: move.dst});
 
+    if (position.board[move.src].type == 'P' && Math.abs(move.src - move.dst) == 16) {
+        diffs.push({action: 'pawnColumn', col: move.src % 8});
+    } else {
+        diffs.push({action: 'pawnColumn', col: null});
+    }
+
     return diffs;
 }
 
@@ -26,6 +32,8 @@ function applyDiffs(position, diffs) {
         } else if (diff.action === 'move') {
             targetPosition.board[diff.dst] = targetPosition.board[diff.src];
             targetPosition.board[diff.src] = null;
+        } else if (diff.action === 'pawnColumn') {
+            targetPosition.lastPawnMoveColumn = diff.col;
         }
     });
 
