@@ -34,6 +34,23 @@ describe('moves module', function () {
         assert.equal(moves.length, 1);
     });
 
+    it('must implement consistent Pawn take', function () {
+        var position = createEmptyBoard();
+        position.board[43] = {type: 'P', side: 'B'};
+        position.board[36] = {type: 'P', side: 'W'};
+        var moves = chessRules.getAvailableMoves(position);
+        assert.equal(moves.length, 2);
+    });
+
+    it('must implement Pawn en-passant', function () {
+        var position = createEmptyBoard();
+        position.board[35] = {type: 'P', side: 'B'};
+        position.board[36] = {type: 'P', side: 'W'};
+        position.lastPawnMoveColumn = 3;
+        var moves = chessRules.getAvailableMoves(position);
+        assert.equal(moves.length, 2);
+    });
+
     it('must implement consistent Knight movement', function () {
         var position = createEmptyBoard();
         position.board[28] = {type: 'N', side: 'W'};

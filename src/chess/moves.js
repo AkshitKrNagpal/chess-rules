@@ -94,12 +94,18 @@ pieceDestinationsEvaluator.P = function (position, coord) {
         destinations.push(coordAhead1);
     }
 
-    if (isOpponent(position, coordSide1)) {
-        destinations.push(coordSide1);
-    }
 
     if (isOpponent(position, coordSide2)) {
         destinations.push(coordSide2);
+    } else if (position.lastPawnMoveColumn == coord.x - 1 && (coord.y - iy) / dy == 3) {
+        destinations.push(coordSide2);
+    }
+
+
+    if (isOpponent(position, coordSide1)) {
+        destinations.push(coordSide1);
+    } else if (position.lastPawnMoveColumn == coord.x + 1 && (coord.y - iy) / dy == 3) {
+        destinations.push(coordSide1);
     }
 
     if (coord.y == iy
