@@ -1,9 +1,15 @@
 'use strict';
 
 var positions = require('./position');
+var coordinates = require('./coordinates');
+var Coord = coordinates.BoardCoordinates;
+
 
 function computeDiffs(position, move) {
     var diffs = [];
+    var src = new Coord(move.src);
+    var dst = new Coord(move.dst);
+    var delta = dst.sub(src);
 
     var destinationPiece = position.board[move.dst];
 
@@ -13,7 +19,12 @@ function computeDiffs(position, move) {
 
     diffs.push({action: 'move', src: move.src, dst: move.dst});
 
-    if (position.board[move.src].type == 'P' && Math.abs(move.src - move.dst) == 16) {
+    // Special case for 'en passant'
+    if (destinationPiece == null && position.board[move.src].type == 'P') {
+        // TODO for #3
+    }
+
+    if (position.board[move.src].type == 'P' && Math.abs(delta.y) == 2) {
         diffs.push({action: 'pawnColumn', col: move.src % 8});
     } else {
         diffs.push({action: 'pawnColumn', col: null});

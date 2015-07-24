@@ -15,5 +15,8 @@ describe('coordinates module', function () {
         assert.equal(dest.offset, 18);
         assert.equal(dest.x, 2);
         assert.equal(dest.y, 2);
+
+        dest = dest.sub(new Coord(-2, 1));
+        assert.deepEqual(dest, cE2xy);
     });
 });

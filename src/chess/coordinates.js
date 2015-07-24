@@ -17,6 +17,10 @@ BoardCoordinates.prototype.add = function (offset) {
     return new BoardCoordinates(this.x + offset.x, this.y + offset.y);
 };
 
+BoardCoordinates.prototype.sub = function (offset) {
+    return new BoardCoordinates(this.x - offset.x, this.y - offset.y);
+};
+
 BoardCoordinates.prototype.isValid = function () {
     return this.x >= 0 && this.x < 8 && this.y >= 0 && this.y < 8;
 };

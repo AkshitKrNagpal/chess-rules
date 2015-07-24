@@ -28,7 +28,8 @@ describe('single game with', function () {
         assert.equal(position.lastPawnMoveColumn, 3);
 
         position = playMoves(position, ['exd6']);
-        // assert.equal(position.board[35], null);
+        // Commented out until #3 is released
+        //assert.equal(position.board[35], null);
 
         playMoves(position, ['Qxd6', 'Nf3', 'Nc6']);
     });
