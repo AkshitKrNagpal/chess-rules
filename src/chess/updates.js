@@ -20,8 +20,9 @@ function computeDiffs(position, move) {
     diffs.push({action: 'move', src: move.src, dst: move.dst});
 
     // Special case for 'en passant'
-    if (destinationPiece == null && position.board[move.src].type == 'P') {
-        // TODO for #3
+    if (destinationPiece == null && position.board[move.src].type == 'P' && Math.abs(delta.x)) {
+        var takenPieceCoord = src.add(new Coord(delta.x, 0));
+        diffs.push({action: 'remove', src: takenPieceCoord.offset});
     }
 
     if (position.board[move.src].type == 'P' && Math.abs(delta.y) == 2) {
