@@ -129,9 +129,9 @@ function positionToString(position, utfFlag) {
             if (currentPiece == null) {
                 strings.push('.');
             } else if (currentPiece.side == 'W') {
-                strings.push('true'==utfFlag?pieceToUTF8(currentPiece):currentPiece.type.toUpperCase());
+                strings.push(utfFlag?pieceToUTF8(currentPiece):currentPiece.type.toUpperCase());
             } else {
-                strings.push('true'==utfFlag?pieceToUTF8(currentPiece):currentPiece.type.toLowerCase());
+                strings.push(utfFlag?pieceToUTF8(currentPiece):currentPiece.type.toLowerCase());
             }
             strings.push(' ');
         }

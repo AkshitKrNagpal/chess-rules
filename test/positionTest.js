@@ -21,7 +21,7 @@ describe('position module', function () {
 
     it('must display board positions and turn', function () {
         var position = positions.getInitialPosition();
-        var positionStr = positions.positionToString(position);
+        var positionStr = positions.positionToString(position, false);
         var positionStrArray = positionStr.split('\n');
         assert.equal(positionStrArray.length, 9);
         assert.equal(positionStrArray[0], 'WHITE KQkq');
@@ -37,7 +37,7 @@ describe('position module', function () {
 
     it('must display board positions and turn in unicode', function () {
         var position = positions.getInitialPosition();
-        var positionStr = positions.positionToString(position, 'true');
+        var positionStr = positions.positionToString(position, true);
         var positionStrArray = positionStr.split('\n');
         assert.equal(positionStrArray.length, 9);
         assert.equal(positionStrArray[0], 'WHITE KQkq');
