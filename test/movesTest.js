@@ -83,7 +83,8 @@ describe('moves module', function () {
         var position = createEmptyBoard();
         position.board[0] = {type: 'K', side: 'W'};
         var moves = chessRules.getAvailableMoves(position);
-        assert.equal(moves.length, 3);
+        // 3 moves and kingside castling
+        assert.equal(moves.length, 4);
     });
 
     it('must provide available moves list', function () {
@@ -99,7 +100,16 @@ describe('moves module', function () {
         position.board[0] = {type: 'K', side: 'W'};
         position.board[15] = {type: 'R', side: 'B'};
         var moves = chessRules.getAvailableMoves(position);
+        assert.equal(moves.length, 2);
+    });
+
+    it('must forbid castling with a threat on the path', function () {
+        var position = createEmptyBoard();
+        position.board[0] = {type: 'K', side: 'W'};
+        position.board[33] = {type: 'R', side: 'B'};
+        var moves = chessRules.getAvailableMoves(position);
         assert.equal(moves.length, 1);
+        assert.deepEqual(moves[0], {src: 0, dst: 8});
     });
 
     it('must forbid piece movements that would uncover King', function () {
@@ -108,7 +118,7 @@ describe('moves module', function () {
         position.board[3] = {type: 'R', side: 'W'};
         position.board[7] = {type: 'R', side: 'B'};
         var moves = chessRules.getAvailableMoves(position);
-        assert.equal(moves.length, 9);
+        assert.equal(moves.length, 10);
     });
 
 });

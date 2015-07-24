@@ -9,7 +9,7 @@ function playMoves(position, moves) {
         var move = chessRules.pgnToMove(position, pgn);
         position = chessRules.applyMove(position, move);
 
-        // console.log(pgn + " -> \n" + chessRules.positionToString(position));
+        console.log(pgn + " -> \n" + chessRules.positionToString(position));
     }
 
     return position;
@@ -37,5 +37,41 @@ describe('single game with', function () {
         var position = chessRules.getInitialPosition();
         position = playMoves(position, ['Nf3', 'd5', 'Nc3', 'd4', 'e4', 'dxe3']);
         assert.equal(position.board[28], null);
+    });
+
+    it('White kingside castling', function () {
+        var position = chessRules.getInitialPosition();
+        position = playMoves(position, ['e4', 'e5', 'Bb5', 'Nc6', 'Nf3', 'Nf6']);
+        position = playMoves(position, ['O-O']);
+        assert.equal(position.board[5].type, 'R');
+        assert.equal(position.board[6].type, 'K');
+    });
+
+    it('Both queenside castlings', function () {
+        var position = chessRules.getInitialPosition();
+        position = playMoves(position, ['Nc3', 'Nc6', 'd4', 'd5', 'Bf4', 'Bf5', 'Qd3', 'Qd6']);
+        position = playMoves(position, ['O-O-O']);
+        assert.equal(position.board[3].type, 'R');
+        assert.equal(position.board[2].type, 'K');
+        assert.equal(position.castlingFlags.W.K, false);
+        assert.equal(position.castlingFlags.W.Q, false);
+        assert.equal(position.castlingFlags.B.K, true);
+        assert.equal(position.castlingFlags.B.Q, true);
+        position = playMoves(position, ['O-O-O']);
+        assert.equal(position.board[59].type, 'R');
+        assert.equal(position.board[58].type, 'K');
+        assert.equal(position.castlingFlags.W.K, false);
+        assert.equal(position.castlingFlags.W.Q, false);
+        assert.equal(position.castlingFlags.B.K, false);
+        assert.equal(position.castlingFlags.B.Q, false);
+    });
+
+    it('Rook move altering castling flags', function () {
+        var position = chessRules.getInitialPosition();
+        position = playMoves(position, ['e4', 'h5', 'Nf3', 'Rh6']);
+        assert.equal(position.castlingFlags.W.K, true);
+        assert.equal(position.castlingFlags.W.Q, true);
+        assert.equal(position.castlingFlags.B.K, false);
+        assert.equal(position.castlingFlags.B.Q, true);
     });
 });

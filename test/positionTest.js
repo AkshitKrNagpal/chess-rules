@@ -8,7 +8,7 @@ describe('position module', function () {
         var position = positions.getInitialPosition();
         assert.equal(position.board.length, 64);
         assert.equal(position.turn, 'W');
-        assert.equal(position.castlingFlags.length, 4);
+        assert.equal(position.castlingFlags.W.K, true);
         assert.equal(position.lastPawnMoveColumn, null);
     });
 

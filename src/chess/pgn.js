@@ -3,6 +3,17 @@
 var chessMoves = require('./moves');
 var parser = require('./pgnParser');
 
+var specialMoves = {
+    'O-O': {
+        'W': {src: 4, dst: 6},
+        'B': {src: 60, dst: 62}
+    },
+    'O-O-O': {
+        'W': {src: 4, dst: 2},
+        'B': {src: 60, dst: 58}
+    }
+};
+
 /**
  * Convert an offset to a PGN coord: 0 -> a1, ... , 63 -> h8
  */
@@ -17,27 +28,32 @@ function coordToName(offset) {
 
 function pgnToMove(position, pgnMove) {
     var move = null;
+    var specialMove = specialMoves[pgnMove];
 
-    var pgnFields = parser.parsePgnMove(pgnMove);
+    if (specialMove) {
+        move = specialMove[position.turn];
+    } else {
+        var pgnFields = parser.parsePgnMove(pgnMove);
 
-    if (pgnFields) {
-        var availableMoves = chessMoves.getAvailableMoves(position);
-        availableMoves.forEach(function (m) {
-            if (pgnFields.srcCol != null && m.src % 8 != pgnFields.srcCol) {
-                return;
+        if (pgnFields) {
+            var availableMoves = chessMoves.getAvailableMoves(position);
+            availableMoves.forEach(function (m) {
+                if (pgnFields.srcCol != null && m.src % 8 != pgnFields.srcCol) {
+                    return;
+                }
+
+                if (pgnFields.srcRow != null && Math.floor(m.src / 8) != pgnFields.srcRow) {
+                    return;
+                }
+
+                if (m.dst == pgnFields.dst && position.board[m.src].type == pgnFields.type) {
+                    pgnFields.src = m.src;
+                }
+            });
+
+            if (pgnFields.src != null && pgnFields.dst != null) {
+                move = {src: pgnFields.src, dst: pgnFields.dst};
             }
-
-            if (pgnFields.srcRow != null && Math.floor(m.src / 8) != pgnFields.srcRow) {
-                return;
-            }
-
-            if (m.dst == pgnFields.dst && position.board[m.src].type == pgnFields.type) {
-                pgnFields.src = m.src;
-            }
-        });
-
-        if (pgnFields.src != null && pgnFields.dst != null) {
-            move = {src: pgnFields.src, dst: pgnFields.dst};
         }
     }
 

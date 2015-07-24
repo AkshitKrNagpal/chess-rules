@@ -31,6 +31,35 @@ function computeDiffs(position, move) {
         diffs.push({action: 'pawnColumn', col: null});
     }
 
+    if (position.board[move.src].type == 'K') {
+        diffs.push({action: 'resetCastling', sides: ['K', 'Q']});
+        if (src.x == 4 && dst.x == 6) {
+            // Move the rook for kingside castling
+            diffs.push({
+                action: 'move',
+                src: dst.add(new Coord(1, 0)).offset,
+                dst: dst.add(new Coord(-1, 0)).offset
+            });
+        }
+
+        if (src.x == 4 && dst.x == 2) {
+            // Move the rook for queenside castling
+            diffs.push({
+                action: 'move',
+                src: dst.add(new Coord(-2, 0)).offset,
+                dst: dst.add(new Coord(1, 0)).offset
+            });
+        }
+    }
+
+    if (position.board[move.src].type == 'R' && src.x == 0) {
+        diffs.push({action: 'resetCastling', sides: ['Q']});
+    }
+
+    if (position.board[move.src].type == 'R' && src.x == 7) {
+        diffs.push({action: 'resetCastling', sides: ['K']});
+    }
+
     return diffs;
 }
 
@@ -46,6 +75,10 @@ function applyDiffs(position, diffs) {
             targetPosition.board[diff.src] = null;
         } else if (diff.action === 'pawnColumn') {
             targetPosition.lastPawnMoveColumn = diff.col;
+        } else if (diff.action === 'resetCastling') {
+            diff.sides.forEach(function (side) {
+                targetPosition.castlingFlags[position.turn][side] = false;
+            });
         }
     });
 

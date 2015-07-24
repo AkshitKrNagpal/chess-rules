@@ -184,6 +184,22 @@ pieceDestinationsEvaluator.K = function (position, coord) {
         }
     }
 
+    if (position.castlingFlags[position.turn].K) {
+        var cStep1 = coord.add(new Coord(1, 0));
+        var cStep2 = coord.add(new Coord(2, 0));
+        if (isFree(position, cStep1) && isFree(position, cStep2)) {
+            destinations.push(cStep2);
+        }
+    }
+
+    if (position.castlingFlags[position.turn].Q) {
+        var cStep1 = coord.add(new Coord(-1, 0));
+        var cStep2 = coord.add(new Coord(-2, 0));
+        if (isFree(position, cStep1) && isFree(position, cStep2)) {
+            destinations.push(cStep2);
+        }
+    }
+
     return destinations;
 };
 
@@ -239,7 +255,7 @@ function getAvailableMoves(position) {
     var legalmoves = [];
 
 
-    availableMoves.forEach(function (move) {
+    var isMoveLeadingToKingThreat = function (move) {
         var updatedPosition = updates.applyMove(position, move);
         var opponentMoves = computeAllMoves(updatedPosition);
         var kingOffset = findPiece(updatedPosition, 'K', position.turn);
@@ -250,6 +266,26 @@ function getAvailableMoves(position) {
                 kingThreat = true;
             }
         });
+
+        return kingThreat;
+    };
+
+    availableMoves.forEach(function (move) {
+        var src = new Coord(move.src);
+        var dst = new Coord(move.dst);
+        var delta = dst.sub(src);
+
+        var kingThreat = isMoveLeadingToKingThreat(move);
+
+        // Kingside castling
+        if (position.board[move.src].type == 'K' && delta.x == 2) {
+            kingThreat = kingThreat || isMoveLeadingToKingThreat({src: move.src, dst: move.src + 1})
+        }
+
+        // Queenside castling
+        if (position.board[move.src].type == 'K' && delta.x == -2) {
+            kingThreat = kingThreat || isMoveLeadingToKingThreat({src: move.src, dst: move.src - 1})
+        }
 
         if (!kingThreat) {
             legalmoves.push(move);

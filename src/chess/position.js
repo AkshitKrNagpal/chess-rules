@@ -1,23 +1,21 @@
 'use strict';
-
+var _ = require('underscore-plus');
 
 function pieceFactory(piece, side) {
     return {type: piece, side: side};
 }
 
 function clone(position) {
-    return {
-        turn: position.turn,
-        castlingFlags: position.castlingFlags.slice(0),
-        lastPawnMoveColumn: position.lastPawnMoveColumn,
-        board: position.board.slice(0)
-    };
+    return _.deepClone(position);
 }
 
 function getInitialPosition() {
     return {
         turn: 'W',
-        castlingFlags: ['wk', 'wq', 'bk', 'bq'],
+        castlingFlags: {
+            'W': {'K': true, 'Q': true},
+            'B': {'K': true, 'Q': true}
+        },
 
         lastPawnMoveColumn: null,
 
@@ -70,10 +68,10 @@ function positionToString(position) {
     var strings = [];
     strings.push(position.turn == 'W' ? 'WHITE' : 'BLACK');
     strings.push(' ');
-    strings.push(position.castlingFlags[0] == 'wk' ? 'K' : '');
-    strings.push(position.castlingFlags[1] == 'wq' ? 'Q' : '');
-    strings.push(position.castlingFlags[2] == 'bk' ? 'k' : '');
-    strings.push(position.castlingFlags[3] == 'bq' ? 'q' : '');
+    strings.push(position.castlingFlags.W.K ? 'K' : '');
+    strings.push(position.castlingFlags.W.Q ? 'Q' : '');
+    strings.push(position.castlingFlags.B.K ? 'k' : '');
+    strings.push(position.castlingFlags.B.Q ? 'q' : '');
 
     var row;
     var col;
