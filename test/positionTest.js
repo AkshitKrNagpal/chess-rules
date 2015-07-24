@@ -35,4 +35,19 @@ describe('position module', function () {
         assert.equal(positionStrArray[8], 'R N B Q K B N R ');
     });
 
+    it('must display board positions and turn in unicode', function () {
+        var position = positions.getInitialPosition();
+        var positionStr = positions.positionToString(position, 'true');
+        var positionStrArray = positionStr.split('\n');
+        assert.equal(positionStrArray.length, 9);
+        assert.equal(positionStrArray[0], 'WHITE KQkq');
+        assert.equal(positionStrArray[1], '\u265C \u265E \u265D \u265B \u265A \u265D \u265E \u265C ');
+        assert.equal(positionStrArray[2], '\u265F \u265F \u265F \u265F \u265F \u265F \u265F \u265F ');
+        assert.equal(positionStrArray[3], '. . . . . . . . ');
+        assert.equal(positionStrArray[4], '. . . . . . . . ');
+        assert.equal(positionStrArray[5], '. . . . . . . . ');
+        assert.equal(positionStrArray[6], '. . . . . . . . ');
+        assert.equal(positionStrArray[7], '\u2659 \u2659 \u2659 \u2659 \u2659 \u2659 \u2659 \u2659 ');
+        assert.equal(positionStrArray[8], '\u2656 \u2658 \u2657 \u2655 \u2654 \u2657 \u2658 \u2656 ');
+    });
 });
