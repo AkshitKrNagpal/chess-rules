@@ -9,7 +9,7 @@ function playMoves(position, moves) {
         var move = chessRules.pgnToMove(position, pgn);
         position = chessRules.applyMove(position, move);
 
-        console.log(pgn + " -> \n" + chessRules.positionToString(position));
+        //console.log(pgn + " -> \n" + chessRules.positionToString(position));
     }
 
     return position;
