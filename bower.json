@@ -4,6 +4,7 @@
     "Yannick Kirschhoffer <alcibiade@alcibiade.org>"
   ],
   "homepage": "https://github.com/ChessCorp/chess-rules",
+  "main": "src/index.js",
   "ignore": [
     "/test/"
   ],

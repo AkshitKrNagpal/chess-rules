@@ -26,7 +26,7 @@ module.exports = function (grunt) {
     browserify: {
         options: {
             browserifyOptions: {
-                standalone: 'chess'
+                standalone: 'chessRules'
             }
         },
         dist: {
