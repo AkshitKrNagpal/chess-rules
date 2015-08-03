@@ -93,5 +93,7 @@ function applyMove(position, move) {
 }
 
 module.exports = {
+    computeDiffs: computeDiffs,
+    applyDiffs: applyDiffs,
     applyMove: applyMove
 };

@@ -2727,6 +2727,8 @@ function applyMove(position, move) {
 }
 
 module.exports = {
+    computeDiffs: computeDiffs,
+    applyDiffs: applyDiffs,
     applyMove: applyMove
 };
 
@@ -2743,6 +2745,8 @@ var chessRules = {
     positionToString: position.positionToString,
     getAvailableMoves: moves.getAvailableMoves,
     applyMove: updates.applyMove,
+    computeDiffs: updates.computeDiffs,
+    applyDiffs: updates.applyDiffs,
     pgnToMove: pgn.pgnToMove,
     moveToPgn: pgn.moveToPgn
 };
