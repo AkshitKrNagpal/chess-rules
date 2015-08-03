@@ -25,7 +25,10 @@ module.exports = function (grunt) {
     clean: ['dist'],
     browserify: {
         options: {
-         },
+            browserifyOptions: {
+                standalone: 'chess'
+            }
+        },
         dist: {
             src: 'src/index.js',
             dest: 'dist/<%= pkg.name %>.js'
