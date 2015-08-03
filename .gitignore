@@ -2,4 +2,3 @@
 /.idea/
 *.iml
 npm-debug.log
-dist/

@@ -1,0 +1,14 @@
+{
+  "name": "chess-rules",
+  "authors": [
+    "Yannick Kirschhoffer <alcibiade@alcibiade.org>"
+  ],
+  "homepage": "https://github.com/ChessCorp/chess-rules",
+  "ignore": [
+    "/test/"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

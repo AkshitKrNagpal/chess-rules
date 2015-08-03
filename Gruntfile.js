@@ -22,6 +22,7 @@ module.exports = function (grunt) {
         src: ['test/**/*.js']
       }
     },
+    clean: ['dist'],
     browserify: {
         options: {
          },
@@ -70,7 +71,7 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('default', ['jshint', 'test', 'browserify', 'uglify']);
+  grunt.registerTask('default', ['clean', 'jshint', 'test', 'browserify', 'uglify']);
   grunt.registerTask('test', ['mochacov:test']);
   grunt.registerTask('travis', ['default', 'mochacov:coverage']);
 };
