@@ -74,6 +74,8 @@ function positionToString(position, utfFlag) {
     var col;
     for (row = 7; row >= 0; row--) {
         strings.push('\n');
+        strings.push(row+1);
+        strings.push(' ');
         for (col = 0; col < 8; col++) {
             var currentPiece = position.board[row * 8 + col];
             if (currentPiece == null) {
@@ -86,6 +88,7 @@ function positionToString(position, utfFlag) {
             strings.push(' ');
         }
     }
+    strings.push('\n  a b c d e f g h ');
     return strings.join('');
 }
 
