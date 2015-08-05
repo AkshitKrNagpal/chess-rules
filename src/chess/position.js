@@ -1,9 +1,6 @@
 'use strict';
+var piece = require('./piece');
 var _ = require('underscore-plus');
-
-function pieceFactory(piece, side) {
-    return {type: piece, side: side};
-}
 
 function clone(position) {
     return _.deepClone(position);
@@ -20,94 +17,48 @@ function getInitialPosition() {
         lastPawnMoveColumn: null,
 
         board: [
-            pieceFactory("R", "W"),
-            pieceFactory("N", "W"),
-            pieceFactory("B", "W"),
-            pieceFactory("Q", "W"),
-            pieceFactory("K", "W"),
-            pieceFactory("B", "W"),
-            pieceFactory("N", "W"),
-            pieceFactory("R", "W"),
+            piece.pieceFactory("R", "W"),
+            piece.pieceFactory("N", "W"),
+            piece.pieceFactory("B", "W"),
+            piece.pieceFactory("Q", "W"),
+            piece.pieceFactory("K", "W"),
+            piece.pieceFactory("B", "W"),
+            piece.pieceFactory("N", "W"),
+            piece.pieceFactory("R", "W"),
 
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
 
             null, null, null, null, null, null, null, null,
             null, null, null, null, null, null, null, null,
             null, null, null, null, null, null, null, null,
             null, null, null, null, null, null, null, null,
 
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
 
-            pieceFactory("R", "B"),
-            pieceFactory("N", "B"),
-            pieceFactory("B", "B"),
-            pieceFactory("Q", "B"),
-            pieceFactory("K", "B"),
-            pieceFactory("B", "B"),
-            pieceFactory("N", "B"),
-            pieceFactory("R", "B")
+            piece.pieceFactory("R", "B"),
+            piece.pieceFactory("N", "B"),
+            piece.pieceFactory("B", "B"),
+            piece.pieceFactory("Q", "B"),
+            piece.pieceFactory("K", "B"),
+            piece.pieceFactory("B", "B"),
+            piece.pieceFactory("N", "B"),
+            piece.pieceFactory("R", "B")
         ]
     };
-}
-
-function pieceToUTF8(piece) {
-    var code;
-    switch(piece.type.concat(piece.side)) {
-        case 'PW':
-            code = '\u2659';
-            break;
-        case 'PB':
-            code = '\u265F';
-            break;
-        case 'NW':
-            code = '\u2658';
-            break;
-        case 'NB':
-            code = '\u265E';
-            break;
-        case 'BW':
-            code = '\u2657';
-            break;
-        case 'BB':
-            code = '\u265D';
-            break;
-        case 'RW':
-            code = '\u2656';
-            break;
-        case 'RB':
-            code = '\u265C';
-            break;
-        case 'QW':
-            code = '\u2655';
-            break;
-        case 'QB':
-            code = '\u265B';
-            break;
-        case 'KW':
-            code = '\u2654';
-            break;
-        case 'KB':
-            code = '\u265A';
-            break;
-        default:
-            code = null;
-            break;
-    }
-    return code;
 }
 
 function positionToString(position, utfFlag) {
@@ -128,9 +79,9 @@ function positionToString(position, utfFlag) {
             if (currentPiece == null) {
                 strings.push('.');
             } else if (currentPiece.side == 'W') {
-                strings.push(utfFlag?pieceToUTF8(currentPiece):currentPiece.type.toUpperCase());
+                strings.push(utfFlag?piece.pieceToUTF8(currentPiece):currentPiece.type.toUpperCase());
             } else {
-                strings.push(utfFlag?pieceToUTF8(currentPiece):currentPiece.type.toLowerCase());
+                strings.push(utfFlag?piece.pieceToUTF8(currentPiece):currentPiece.type.toLowerCase());
             }
             strings.push(' ');
         }
