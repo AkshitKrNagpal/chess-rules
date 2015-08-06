@@ -8,7 +8,7 @@
     "email": "alcibiade@alcibiade.org",
     "url": "http://www.alcibiade.org/"
   },
-  "repository": "alcibiade/chess-rules",
+  "repository": "ChessCorp/chess-rules",
   "license": "MIT",
   "files": [
     "dist/",
