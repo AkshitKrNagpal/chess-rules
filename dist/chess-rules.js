@@ -2295,7 +2295,7 @@ module.exports = {
     getAvailableMoves: getAvailableMoves
 };
 
-},{"./coordinates":4,"./updates":9}],6:[function(require,module,exports){
+},{"./coordinates":4,"./updates":10}],6:[function(require,module,exports){
 'use strict';
 
 var chessMoves = require('./moves');
@@ -2486,11 +2486,39 @@ module.exports = {
 
 },{}],8:[function(require,module,exports){
 'use strict';
-var _ = require('underscore-plus');
+
+var asciiToExtended = {
+    "PW": "♙",
+    "PB": "♟",
+    "NW": "♘",
+    "NB": "♞",
+    "BW": "♗",
+    "BB": "♝",
+    "RW": "♖",
+    "RB": "♜",
+    "QW": "♕",
+    "QB": "♛",
+    "KW": "♔",
+    "KB": "♚"
+};
 
 function pieceFactory(piece, side) {
     return {type: piece, side: side};
 }
+
+function pieceToUTF8(piece) {
+    return(asciiToExtended[piece.type.concat(piece.side)]);
+}
+
+module.exports = {
+    pieceFactory: pieceFactory,
+    pieceToUTF8: pieceToUTF8
+};
+
+},{}],9:[function(require,module,exports){
+'use strict';
+var piece = require('./piece');
+var _ = require('underscore-plus');
 
 function clone(position) {
     return _.deepClone(position);
@@ -2507,94 +2535,48 @@ function getInitialPosition() {
         lastPawnMoveColumn: null,
 
         board: [
-            pieceFactory("R", "W"),
-            pieceFactory("N", "W"),
-            pieceFactory("B", "W"),
-            pieceFactory("Q", "W"),
-            pieceFactory("K", "W"),
-            pieceFactory("B", "W"),
-            pieceFactory("N", "W"),
-            pieceFactory("R", "W"),
+            piece.pieceFactory("R", "W"),
+            piece.pieceFactory("N", "W"),
+            piece.pieceFactory("B", "W"),
+            piece.pieceFactory("Q", "W"),
+            piece.pieceFactory("K", "W"),
+            piece.pieceFactory("B", "W"),
+            piece.pieceFactory("N", "W"),
+            piece.pieceFactory("R", "W"),
 
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
-            pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
+            piece.pieceFactory("P", "W"),
 
             null, null, null, null, null, null, null, null,
             null, null, null, null, null, null, null, null,
             null, null, null, null, null, null, null, null,
             null, null, null, null, null, null, null, null,
 
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
-            pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
+            piece.pieceFactory("P", "B"),
 
-            pieceFactory("R", "B"),
-            pieceFactory("N", "B"),
-            pieceFactory("B", "B"),
-            pieceFactory("Q", "B"),
-            pieceFactory("K", "B"),
-            pieceFactory("B", "B"),
-            pieceFactory("N", "B"),
-            pieceFactory("R", "B")
+            piece.pieceFactory("R", "B"),
+            piece.pieceFactory("N", "B"),
+            piece.pieceFactory("B", "B"),
+            piece.pieceFactory("Q", "B"),
+            piece.pieceFactory("K", "B"),
+            piece.pieceFactory("B", "B"),
+            piece.pieceFactory("N", "B"),
+            piece.pieceFactory("R", "B")
         ]
     };
-}
-
-function pieceToUTF8(piece) {
-    var code;
-    switch(piece.type.concat(piece.side)) {
-        case 'PW':
-            code = '\u2659';
-            break;
-        case 'PB':
-            code = '\u265F';
-            break;
-        case 'NW':
-            code = '\u2658';
-            break;
-        case 'NB':
-            code = '\u265E';
-            break;
-        case 'BW':
-            code = '\u2657';
-            break;
-        case 'BB':
-            code = '\u265D';
-            break;
-        case 'RW':
-            code = '\u2656';
-            break;
-        case 'RB':
-            code = '\u265C';
-            break;
-        case 'QW':
-            code = '\u2655';
-            break;
-        case 'QB':
-            code = '\u265B';
-            break;
-        case 'KW':
-            code = '\u2654';
-            break;
-        case 'KB':
-            code = '\u265A';
-            break;
-        default:
-            code = null;
-            break;
-    }
-    return code;
 }
 
 function positionToString(position, utfFlag) {
@@ -2610,18 +2592,21 @@ function positionToString(position, utfFlag) {
     var col;
     for (row = 7; row >= 0; row--) {
         strings.push('\n');
+        strings.push(row+1);
+        strings.push(' ');
         for (col = 0; col < 8; col++) {
             var currentPiece = position.board[row * 8 + col];
             if (currentPiece == null) {
                 strings.push('.');
             } else if (currentPiece.side == 'W') {
-                strings.push(utfFlag?pieceToUTF8(currentPiece):currentPiece.type.toUpperCase());
+                strings.push(utfFlag?piece.pieceToUTF8(currentPiece):currentPiece.type.toUpperCase());
             } else {
-                strings.push(utfFlag?pieceToUTF8(currentPiece):currentPiece.type.toLowerCase());
+                strings.push(utfFlag?piece.pieceToUTF8(currentPiece):currentPiece.type.toLowerCase());
             }
             strings.push(' ');
         }
     }
+    strings.push('\n  a b c d e f g h ');
     return strings.join('');
 }
 
@@ -2631,7 +2616,7 @@ module.exports = {
     clone: clone
 };
 
-},{"underscore-plus":2}],9:[function(require,module,exports){
+},{"./piece":8,"underscore-plus":2}],10:[function(require,module,exports){
 'use strict';
 
 var positions = require('./position');
@@ -2732,7 +2717,7 @@ module.exports = {
     applyMove: applyMove
 };
 
-},{"./coordinates":4,"./position":8}],10:[function(require,module,exports){
+},{"./coordinates":4,"./position":9}],11:[function(require,module,exports){
 'use strict';
 
 var position = require('./chess/position');
@@ -2753,5 +2738,5 @@ var chessRules = {
 
 module.exports = chessRules;
 
-},{"./chess/moves":5,"./chess/pgn":6,"./chess/position":8,"./chess/updates":9}]},{},[10])(10)
+},{"./chess/moves":5,"./chess/pgn":6,"./chess/position":9,"./chess/updates":10}]},{},[11])(11)
 });
