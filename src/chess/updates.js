@@ -2,6 +2,7 @@
 
 var positions = require('./position');
 var coordinates = require('./coordinates');
+var movesPieces = require('./moves-pieces');
 var Coord = coordinates.BoardCoordinates;
 
 
@@ -60,6 +61,21 @@ function computeDiffs(position, move) {
         diffs.push({action: 'resetCastling', sides: ['K']});
     }
 
+    // Update the check flag if the move threatends the opponent's king.
+
+    var updatedPosition = applyDiffs(position, diffs);
+    updatedPosition.turn = position.turn;
+    var checkFlag = false;
+    movesPieces.computeAllMoves(updatedPosition).forEach(function (m) {
+        var targetPiece = position.board[m.dst];
+
+        if (targetPiece && targetPiece.type == 'K' && targetPiece.side != position.turn) {
+            checkFlag = true;
+        }
+    });
+
+    diffs.push({action: 'updateCheckFlag', value: checkFlag});
+
     return diffs;
 }
 
@@ -79,6 +95,8 @@ function applyDiffs(position, diffs) {
             diff.sides.forEach(function (side) {
                 targetPosition.castlingFlags[position.turn][side] = false;
             });
+        } else if (diff.action === 'updateCheckFlag') {
+            targetPosition.check = diff.value;
         }
     });
 

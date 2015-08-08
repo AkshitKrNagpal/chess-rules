@@ -78,28 +78,27 @@ describe('single game with', function () {
         assert.equal(position.castlingFlags.B.K, false);
         assert.equal(position.castlingFlags.B.Q, true);
     });
-    //
-    //it('A situation were the black king is in check', function () {
-    //    var position = chessRules.getInitialPosition();
-    //    position = playMoves(position, ['e4', 'e5', 'd4', 'd5', 'Bb5+']);
-    //    assert.equal(chessRules.getAvailableMoves(position).length, 0);
-    //    assert.equal(position.check, true);
-    //    assert.equal(position.status, "OPEN");
-    //});
-    //
-    //it('A short game leading to a white win.', function () {
-    //    var position = chessRules.getInitialPosition();
-    //    position = playMoves(position, ['e4', 'e5', 'Bc4', 'Bc5', 'Qh5', 'Nf6', 'Qxf7#']);
-    //    assert.equal(chessRules.getAvailableMoves(position).length, 0);
-    //    assert.equal(position.check, true);
-    //    assert.equal(position.status, "WHITEWON");
-    //});
-    //
-    //it('A short game leading to a black win.', function () {
-    //    var position = chessRules.getInitialPosition();
-    //    position = playMoves(position, ['g4', 'e5', 'f4', 'Qh4#']);
-    //    assert.equal(chessRules.getAvailableMoves(position).length, 0);
-    //    assert.equal(position.check, true);
-    //    assert.equal(position.status, "BLACKWON");
-    //});
+
+    it('A situation were the black king is in check', function () {
+        var position = chessRules.getInitialPosition();
+        position = playMoves(position, ['e4', 'e5', 'd4', 'd5', 'Bb5+']);
+        assert.equal(position.check, true);
+        assert.equal(chessRules.getGameStatus(position), "OPEN");
+    });
+
+    it('A short game leading to a white win.', function () {
+        var position = chessRules.getInitialPosition();
+        position = playMoves(position, ['e4', 'e5', 'Bc4', 'Bc5', 'Qh5', 'Nf6', 'Qxf7#']);
+        assert.equal(chessRules.getAvailableMoves(position).length, 0);
+        assert.equal(position.check, true);
+        assert.equal(chessRules.getGameStatus(position), "WHITEWON");
+    });
+
+    it('A short game leading to a black win.', function () {
+        var position = chessRules.getInitialPosition();
+        position = playMoves(position, ['g4', 'e5', 'f4', 'Qh4#']);
+        assert.equal(chessRules.getAvailableMoves(position).length, 0);
+        assert.equal(position.check, true);
+        assert.equal(chessRules.getGameStatus(position), "BLACKWON");
+    });
 });

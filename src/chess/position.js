@@ -15,7 +15,6 @@ function getInitialPosition() {
         },
 
         lastPawnMoveColumn: null,
-        status: 'OPEN',
         check: false,
 
         board: [
