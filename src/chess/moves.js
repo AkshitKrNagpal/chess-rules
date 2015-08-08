@@ -255,10 +255,10 @@ function getAvailableMoves(position) {
     var legalmoves = [];
 
 
-    var isMoveLeadingToKingThreat = function (move) {
+    var isMoveLeadingToThreat = function (move, pieceType, pieceSide) {
         var updatedPosition = updates.applyMove(position, move);
         var opponentMoves = computeAllMoves(updatedPosition);
-        var kingOffset = findPiece(updatedPosition, 'K', position.turn);
+        var kingOffset = findPiece(updatedPosition, pieceType, pieceSide);
         var kingThreat = false;
 
         opponentMoves.forEach(function (move) {
@@ -275,16 +275,16 @@ function getAvailableMoves(position) {
         var dst = new Coord(move.dst);
         var delta = dst.sub(src);
 
-        var kingThreat = isMoveLeadingToKingThreat(move);
+        var kingThreat = isMoveLeadingToThreat(move,'K', position.turn);
 
         // Kingside castling
         if (position.board[move.src].type == 'K' && delta.x == 2) {
-            kingThreat = kingThreat || isMoveLeadingToKingThreat({src: move.src, dst: move.src + 1})
+            kingThreat = kingThreat || isMoveLeadingToThreat({src: move.src, dst: move.src + 1}, 'K', position.turn)
         }
 
         // Queenside castling
         if (position.board[move.src].type == 'K' && delta.x == -2) {
-            kingThreat = kingThreat || isMoveLeadingToKingThreat({src: move.src, dst: move.src - 1})
+            kingThreat = kingThreat || isMoveLeadingToThreat({src: move.src, dst: move.src - 1}, 'K', position.turn)
         }
 
         if (!kingThreat) {
