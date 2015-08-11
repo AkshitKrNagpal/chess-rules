@@ -44,10 +44,10 @@ describe('position module', function () {
         assert.equal(positionStrArray[0], 'WHITE KQkq');
         assert.equal(positionStrArray[1], '8 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ ');
         assert.equal(positionStrArray[2], '7 ♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟ ');
-        assert.equal(positionStrArray[3], '6 . . . . . . . . ');
-        assert.equal(positionStrArray[4], '5 . . . . . . . . ');
-        assert.equal(positionStrArray[5], '4 . . . . . . . . ');
-        assert.equal(positionStrArray[6], '3 . . . . . . . . ');
+        assert.equal(positionStrArray[3], '6                 ');
+        assert.equal(positionStrArray[4], '5                 ');
+        assert.equal(positionStrArray[5], '4                 ');
+        assert.equal(positionStrArray[6], '3                 ');
         assert.equal(positionStrArray[7], '2 ♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙ ');
         assert.equal(positionStrArray[8], '1 ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ ');
         assert.equal(positionStrArray[9], '  a b c d e f g h ');

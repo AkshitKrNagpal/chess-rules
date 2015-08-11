@@ -1,5 +1,12 @@
 'use strict';
 var piece = require('./piece');
+var colors = require('colors');
+colors.setTheme({
+    BW: ['black', 'bgWhite'],
+    BB: ['black', 'bgMagenta'],
+    WW: ['white', 'bgWhite'],
+    WB: ['white', 'bgMagenta']
+});
 var _ = require('underscore-plus');
 
 function clone(position) {
@@ -62,6 +69,24 @@ function getInitialPosition() {
     };
 }
 
+function getColoredPiece(row, col, side, pieceStr) {
+    var coloredStr;
+
+    if((row+col)%2==0) {
+        if(side === 'W') {
+            coloredStr = pieceStr.WB;
+        } else {
+            coloredStr = pieceStr.BB;
+        }
+    } else if(side === 'W') {
+        coloredStr = pieceStr.WW;
+    } else {
+        coloredStr = pieceStr.BW;
+    }
+
+    return coloredStr;
+}
+
 function positionToString(position, utfFlag) {
     var strings = [];
     strings.push(position.turn == 'W' ? 'WHITE' : 'BLACK');
@@ -79,14 +104,21 @@ function positionToString(position, utfFlag) {
         strings.push(' ');
         for (col = 0; col < 8; col++) {
             var currentPiece = position.board[row * 8 + col];
-            if (currentPiece == null) {
-                strings.push('.');
-            } else if (currentPiece.side == 'W') {
-                strings.push(utfFlag?piece.pieceToUTF8(currentPiece):currentPiece.type.toUpperCase());
+            if(utfFlag) {
+                if (currentPiece == null) {
+                    strings.push(getColoredPiece(row, col, 'W', '  '));
+                } else {
+                    strings.push(getColoredPiece(row, col, currentPiece.side, piece.pieceToUTF8(currentPiece) + ' '));
+                }
             } else {
-                strings.push(utfFlag?piece.pieceToUTF8(currentPiece):currentPiece.type.toLowerCase());
+                if(currentPiece == null) {
+                    strings.push('. ');
+                } else if (currentPiece.side == 'W') {
+                    strings.push(currentPiece.type.toUpperCase() + ' ');
+                } else {
+                    strings.push(currentPiece.type.toLowerCase() + ' ');
+                }
             }
-            strings.push(' ');
         }
     }
     strings.push('\n  a b c d e f g h ');
