@@ -104,7 +104,7 @@ describe('pgn module', function () {
             var p = chessRules.moveToPgn(position, m);
             assert.equal(p, movetext);
             position = chessRules.applyMove(position, m);
-        })
+        });
     });
 
     it('must hide source when destination is explicit', function () {
@@ -121,7 +121,7 @@ describe('pgn module', function () {
             var p = chessRules.moveToPgn(position, m);
             assert.equal(p, movetext);
             position = chessRules.applyMove(position, m);
-        })
+        });
     });
 
     it('must indicate explicit column/line for confusing knight destination', function () {
@@ -132,7 +132,7 @@ describe('pgn module', function () {
             var p = chessRules.moveToPgn(position, m);
             assert.equal(p, movetext);
             position = chessRules.applyMove(position, m);
-        })
+        });
     });
 
 

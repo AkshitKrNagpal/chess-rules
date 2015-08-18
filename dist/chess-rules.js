@@ -3030,7 +3030,35 @@ function moveToPgn(position, move) {
         pgn += piece.type;
     }
 
-    pgn += coordToName(move.src);
+    var availableMoves = chessMoves.getAvailableMoves(position);
+    var possibleSources = [];
+    availableMoves.forEach(function (m) {
+        if (m.dst == move.dst && piece.type == position.board[m.src].type) {
+            possibleSources.push(m.src);
+        }
+    });
+
+    var src = coordToName(move.src);
+
+    if (possibleSources.length > 1) {
+        var s1 = coordToName(possibleSources[0]);
+        var s2 = coordToName(possibleSources[1]);
+
+        if (s1[0] == s2[0]) {
+            pgn += src[1];
+        } else {
+            pgn += src[0];
+        }
+    }
+
+    if (position.board[move.dst] != null) {
+        if (pgn == '' && piece.type == 'P') {
+            pgn += src[0];
+        }
+
+        pgn += 'x';
+    }
+
     pgn += coordToName(move.dst);
 
     return pgn;
