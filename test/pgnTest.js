@@ -96,5 +96,45 @@ describe('pgn module', function () {
         });
     });
 
+    it('must add an "x" when a piece is taken', function () {
+        var position = chessRules.getInitialPosition();
+
+        ['e4', 'd5', 'exd5'].forEach(function (movetext) {
+            var m = chessRules.pgnToMove(position, movetext);
+            var p = chessRules.moveToPgn(position, m);
+            assert.equal(p, movetext);
+            position = chessRules.applyMove(position, m);
+        })
+    });
+
+    it('must hide source when destination is explicit', function () {
+        var position = chessRules.getInitialPosition();
+        assert.equal(chessRules.moveToPgn(position, chessRules.pgnToMove(position, 'e3')), 'e3');
+    });
+
+
+    it('must indicate explicit column for confusing pawn destination', function () {
+        var position = chessRules.getInitialPosition();
+
+        ['e4', 'd5', 'c4', 'e6', 'exd5'].forEach(function (movetext) {
+            var m = chessRules.pgnToMove(position, movetext);
+            var p = chessRules.moveToPgn(position, m);
+            assert.equal(p, movetext);
+            position = chessRules.applyMove(position, m);
+        })
+    });
+
+    it('must indicate explicit column/line for confusing knight destination', function () {
+        var position = chessRules.getInitialPosition();
+
+        ['Nc3', 'Nc6', 'Nb5', 'Nf6', 'Nd4', 'd5', 'Ngf3', 'e5', 'Nf5', 'h6', 'N3d4'].forEach(function (movetext) {
+            var m = chessRules.pgnToMove(position, movetext);
+            var p = chessRules.moveToPgn(position, m);
+            assert.equal(p, movetext);
+            position = chessRules.applyMove(position, m);
+        })
+    });
+
+
 });
 
