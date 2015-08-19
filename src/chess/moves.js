@@ -28,7 +28,6 @@ function getAvailableMoves(position) {
 
     var legalmoves = [];
 
-
     var isMoveLeadingToThreat = function (move, pieceType, pieceSide) {
         var updatedPosition = updates.applyMove(position, move);
         var opponentMoves = movesPieces.computeAllMoves(updatedPosition);
@@ -49,7 +48,7 @@ function getAvailableMoves(position) {
         var dst = new Coord(move.dst);
         var delta = dst.sub(src);
 
-        var kingThreat = isMoveLeadingToThreat(move,'K', position.turn);
+        var kingThreat = isMoveLeadingToThreat(move, 'K', position.turn);
 
         // Kingside castling
         if (position.board[move.src].type == 'K' && delta.x == 2) {
@@ -69,6 +68,33 @@ function getAvailableMoves(position) {
     return legalmoves;
 }
 
+function isCurrentPlayerInCheck(position) {
+    var isCheck = false;
+    var initialTurn = position.turn;
+    position.turn = initialTurn === 'W' ? 'B' : 'W';
+
+    for (var offset = 0; offset <= 64; offset++) {
+        var piece = position.board[offset];
+        var coord = new Coord(offset);
+
+        if (piece != null && piece.side === position.turn) {
+            var targets = movesPieces.pieceDestinationsEvaluator[piece.type](position, coord);
+
+            targets.forEach(function (dest) {
+                var destPiece = position.board[dest.offset];
+                if (destPiece && destPiece.type === 'K' && destPiece.side !== position.turn) {
+                    isCheck = true;
+                }
+            });
+        }
+    }
+
+    position.turn = initialTurn;
+
+    return isCheck;
+}
+
 module.exports = {
-    getAvailableMoves: getAvailableMoves
+    getAvailableMoves: getAvailableMoves,
+    isCurrentPlayerInCheck: isCurrentPlayerInCheck
 };

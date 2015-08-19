@@ -135,6 +135,22 @@ describe('pgn module', function () {
         });
     });
 
+    it('must support a game leading to PAT situation', function () {
+        var position = chessRules.getInitialPosition();
+
+        ['a4', 'b5', 'axb5', 'a6', 'bxa6', 'c5', 'b4', 'd6', 'bxc5', 'f6', 'cxd6',
+            'g5', 'dxe7', 'Bxe7', 'h4', 'Nc6', 'hxg5', 'Nd4', 'gxf6', 'Nf3+', 'exf3',
+            'Nh6', 'fxe7', 'Ng4', 'fxg4', 'Bf5', 'exd8=Q+', 'Kf7', 'gxf5', 'h5', 'Qxa8',
+            'h4', 'Qxh8', 'h3', 'Rxh3', 'Ke7', 'Qf6+', 'Kd7', 'Rh7+', 'Kc8', 'a7'].forEach(function (movetext) {
+                var m = chessRules.pgnToMove(position, movetext);
+                var p = chessRules.moveToPgn(position, m);
+                position = chessRules.applyMove(position, m);
+                assert.equal(p, movetext);
+            });
+
+        assert.equal(chessRules.getGameStatus(position), 'PAT');
+    });
+
 
 });
 

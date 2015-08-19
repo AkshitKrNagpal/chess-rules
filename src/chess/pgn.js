@@ -1,6 +1,7 @@
 'use strict';
 
 var chessMoves = require('./moves');
+var chessUpdates = require('./updates');
 var parser = require('./pgnParser');
 
 var specialMoves = {
@@ -98,6 +99,18 @@ function moveToPgn(position, move) {
     }
 
     pgn += coordToName(move.dst);
+
+    var nextPosition = chessUpdates.applyMove(position, move);
+
+    // Pawn promotion
+    if (piece.type == 'P' && (move.dst < 8 || move.dst > 56)) {
+        pgn += '=Q';
+    }
+
+    // Check
+    if (chessMoves.isCurrentPlayerInCheck(nextPosition)) {
+        pgn += '+';
+    }
 
     return pgn;
 }

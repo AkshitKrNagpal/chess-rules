@@ -32,6 +32,10 @@ function computeDiffs(position, move) {
         diffs.push({action: 'pawnColumn', col: null});
     }
 
+    if (position.board[move.src].type == 'P' && (dst.y == 0 || dst.y == 7)) {
+        diffs.push({action: 'promote', src: move.dst});
+    }
+
     if (position.board[move.src].type == 'K') {
         diffs.push({action: 'resetCastling', sides: ['K', 'Q']});
         if (src.x == 4 && dst.x == 6) {
@@ -97,6 +101,8 @@ function applyDiffs(position, diffs) {
             });
         } else if (diff.action === 'updateCheckFlag') {
             targetPosition.check = diff.value;
+        } else if (diff.action === 'promote') {
+            targetPosition.board[diff.src].type = 'Q';
         }
     });
 

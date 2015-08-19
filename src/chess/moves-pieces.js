@@ -231,5 +231,6 @@ function computeAllMoves(position) {
 
 
 module.exports = {
-    computeAllMoves: computeAllMoves
+    computeAllMoves: computeAllMoves,
+    pieceDestinationsEvaluator: pieceDestinationsEvaluator
 };
