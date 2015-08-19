@@ -151,6 +151,19 @@ describe('pgn module', function () {
         assert.equal(chessRules.getGameStatus(position), 'PAT');
     });
 
+    it('must support queen and king side castling', function () {
+        var position = chessRules.getInitialPosition();
+
+        ['e4', 'd5', 'Nf3', 'Nc6', 'Bb5', 'Bg4', 'O-O', 'Qd6', 'Nc3', 'O-O-O'].forEach(function (movetext) {
+            var m = chessRules.pgnToMove(position, movetext);
+            var p = chessRules.moveToPgn(position, m);
+            position = chessRules.applyMove(position, m);
+            assert.equal(p, movetext);
+        });
+
+        assert.equal(chessRules.getGameStatus(position), 'OPEN');
+    });
+
 
 });
 

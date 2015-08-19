@@ -69,6 +69,14 @@ function moveToPgn(position, move) {
         pgn += piece.type;
     }
 
+    if (piece.type === 'K' && (move.dst - move.src) == 2) {
+        return 'O-O';
+    }
+
+    if (piece.type === 'K' && (move.dst - move.src) == -2) {
+        return 'O-O-O';
+    }
+
     var availableMoves = chessMoves.getAvailableMoves(position);
     var possibleSources = [];
     availableMoves.forEach(function (m) {
