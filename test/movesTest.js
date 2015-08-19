@@ -121,5 +121,23 @@ describe('moves module', function () {
         assert.equal(moves.length, 10);
     });
 
+    it('must have an option to do queenside castling', function () {
+        var position = chessRules.getInitialPosition();
+
+        ['e4', 'd5', 'Nf3', 'Nc6', 'Bb5', 'Bg4', 'O-O', 'Qd6', 'Nc3'].forEach(function (movetext) {
+            var m = chessRules.pgnToMove(position, movetext);
+            position = chessRules.applyMove(position, m);
+        });
+
+
+        var texts = [];
+        chessRules.getAvailableMoves(position).forEach(function (m) {
+            var pgn = chessRules.moveToPgn(position, m);
+            texts.push(pgn);
+        });
+
+        assert(texts.indexOf('O-O-O') >= 0);
+    });
+
 });
 
