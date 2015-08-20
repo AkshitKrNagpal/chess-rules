@@ -42,6 +42,13 @@ describe('moves module', function () {
         assert.equal(moves.length, 2);
     });
 
+    it('must allow rook to A1', function () {
+        var position = createEmptyBoard();
+        position.board[16] = {type: 'R', side: 'W'};
+        var moves = chessRules.getAvailableMoves(position);
+        assert.equal(moves.length, 14);
+    });
+
     it('must implement Pawn en-passant', function () {
         var position = createEmptyBoard();
         position.board[35] = {type: 'P', side: 'B'};

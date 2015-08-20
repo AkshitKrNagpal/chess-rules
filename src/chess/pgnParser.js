@@ -67,7 +67,7 @@ function parsePgnMove(pgn) {
 
     var dstOffset = computeOffset(pgn, length - 2);
 
-    if (dstOffset) {
+    if (dstOffset != null) {
         fields.dst = dstOffset;
     } else {
         // Reject invalid syntax here

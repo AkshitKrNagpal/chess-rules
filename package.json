@@ -1,6 +1,6 @@
 {
   "name": "chess-rules",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Chess Rules implementation as a standalone module.",
   "homepage": "https://github.com/chesscorp/chess-rules",
   "author": {

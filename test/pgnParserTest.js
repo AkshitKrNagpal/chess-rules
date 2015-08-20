@@ -53,5 +53,11 @@ describe('pgn parser module', function () {
         assert.equal(fields.mate, true);
         assert.equal(fields.checking, false);
     });
+
+    it('must parse Ra1', function () {
+        var fields = parser.parsePgnMove("Ra1");
+        assert.equal(fields.type, 'R');
+        assert.equal(fields.dst, 0);
+    });
 });
 

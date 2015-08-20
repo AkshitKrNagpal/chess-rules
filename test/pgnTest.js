@@ -164,6 +164,20 @@ describe('pgn module', function () {
         assert.equal(chessRules.getGameStatus(position), 'OPEN');
     });
 
+    it('must a move to A1', function () {
+        var position = chessRules.getInitialPosition();
+
+        ['a4', 'a5', 'Ra3', 'b6', 'Ra1'].forEach(function (movetext) {
+            console.log(chessRules.positionToString(position, true));
+            var m = chessRules.pgnToMove(position, movetext);
+            var p = chessRules.moveToPgn(position, m);
+            position = chessRules.applyMove(position, m);
+            assert.equal(p, movetext);
+        });
+
+        assert.equal(chessRules.getGameStatus(position), 'OPEN');
+    });
+
 
 });
 
