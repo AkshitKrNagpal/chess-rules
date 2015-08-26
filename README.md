@@ -4,7 +4,7 @@ Chess Rules implementation as a standalone module.
 
 # Install
 
-# As a Node module
+## As a Node module
 
 
 ```sh
@@ -35,6 +35,7 @@ chess-rules#0.10.1 bower_components/chess-rules
 
 ```js
 > var chessRules = require('chess-rules');
+
 > chessRules
 { getInitialPosition: [Function: getInitialPosition],
   positionToString: [Function: positionToString],
@@ -125,6 +126,7 @@ Moves are expressed as a pair of coordinates on the board. The offset value is c
 ```js
 > var availableMoves = chessRules.getAvailableMoves(position);
 undefined
+
 > availableMoves
 [ { src: 1, dst: 16 },
   { src: 1, dst: 18 },
@@ -158,8 +160,10 @@ Converting move text to move vector:
 ```js
 > chessRules.pgnToMove(position, 'e4')
 { src: 12, dst: 28 }
+
 > chessRules.pgnToMove(position, 'Pe2e4')
 { src: 12, dst: 28 }
+
 > chessRules.pgnToMove(position, 'Nf3')
 { src: 6, dst: 21 }
 ```
@@ -181,8 +185,10 @@ The **applyMove** will apply a move vector to create a new updated position stru
 ```js
 > var moveE4 = chessRules.pgnToMove(position,'e4');
 undefined
+
 > var updatedPosition = chessRules.applyMove(position, moveE4);
 undefined
+
 > console.log(chessRules.positionToString(position))
 WHITE KQkq
 8 r n b q k b n r 
@@ -195,6 +201,7 @@ WHITE KQkq
 1 R N B Q K B N R 
   a b c d e f g h 
 undefined
+
 > console.log(chessRules.positionToString(updatedPosition))
 BLACK KQkq
 8 r n b q k b n r 
@@ -212,11 +219,11 @@ undefined
 
 ## Determine game status
 
-A game can be either:
-* OPEN
-* PAT
-* WHITEWON
-* BLACKWON
+A game status can be either:
+* OPEN - The game is still in progress
+* PAT - The game has ended as one of the players couldn't move anymore while not being checkmate
+* WHITEWON - The white player won
+* BLACKWON - The black player won
 
 ```js
 > chessRules.getGameStatus(position)
