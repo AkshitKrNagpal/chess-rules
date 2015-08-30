@@ -230,6 +230,21 @@ A game status can be either:
 'OPEN'
 ```
 
+## Find pieces on the board
+
+There is a findPiece function to locate a piece on the board. The search has to provide a piece type, and an optional side. If the side is not provided, the position's current player side is used.
+
+```js
+> chessRules.findPiece(position,'K','W')
+[ { offset: 4, x: 4, y: 0 } ]
+> chessRules.findPiece(position,'K','B')
+[ { offset: 60, x: 4, y: 7 } ]
+> chessRules.findPiece(position,'K')
+[ { offset: 4, x: 4, y: 0 } ]
+> chessRules.findPiece(position,'B')
+[ { offset: 2, x: 2, y: 0 }, { offset: 5, x: 5, y: 0 } ]
+```
+
 ## License
 
 MIT © [Yannick Kirschhoffer](http://www.alcibiade.org/)
