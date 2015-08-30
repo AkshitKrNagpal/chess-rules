@@ -5,6 +5,7 @@ var moves = require('./chess/moves');
 var updates = require('./chess/updates');
 var pgn = require('./chess/pgn');
 var status = require('./chess/status');
+var locator = require('./chess/locator');
 
 var chessRules = {
     getInitialPosition: position.getInitialPosition,
@@ -15,7 +16,8 @@ var chessRules = {
     applyDiffs: updates.applyDiffs,
     pgnToMove: pgn.pgnToMove,
     moveToPgn: pgn.moveToPgn,
-    getGameStatus: status.getGameStatus
+    getGameStatus: status.getGameStatus,
+    findPiece: locator.findPiece
 };
 
 module.exports = chessRules;

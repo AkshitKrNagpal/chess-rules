@@ -2649,6 +2649,37 @@ module.exports = {
 },{}],16:[function(require,module,exports){
 'use strict';
 
+var coordinates = require('./coordinates');
+var Coord = coordinates.BoardCoordinates;
+
+function findPiece(position, pieceType, pieceSide) {
+    var result = null;
+    var searchSide = pieceSide ? pieceSide : position.turn;
+    var resultOffsets = [];
+
+    for (var offset = 0; offset < 64; offset++) {
+        var piece = position.board[offset];
+        if (piece != null && piece.type === pieceType && piece.side === searchSide) {
+            resultOffsets.push(offset);
+        }
+    }
+
+    var resultCoords = [];
+
+    resultOffsets.forEach(function (offset) {
+        resultCoords.push(new Coord(offset));
+    });
+
+    return resultCoords;
+}
+
+module.exports = {
+    findPiece: findPiece
+};
+
+},{"./coordinates":15}],17:[function(require,module,exports){
+'use strict';
+
 var Coord = require('./coordinates').BoardCoordinates;
 
 /*
@@ -2884,7 +2915,7 @@ module.exports = {
     pieceDestinationsEvaluator: pieceDestinationsEvaluator
 };
 
-},{"./coordinates":15}],17:[function(require,module,exports){
+},{"./coordinates":15}],18:[function(require,module,exports){
 'use strict';
 
 var coordinates = require('./coordinates');
@@ -2986,7 +3017,7 @@ module.exports = {
     isCurrentPlayerInCheck: isCurrentPlayerInCheck
 };
 
-},{"./coordinates":15,"./moves-pieces":16,"./updates":23}],18:[function(require,module,exports){
+},{"./coordinates":15,"./moves-pieces":17,"./updates":24}],19:[function(require,module,exports){
 'use strict';
 
 var chessMoves = require('./moves');
@@ -3117,7 +3148,7 @@ module.exports = {
     moveToPgn: moveToPgn
 };
 
-},{"./moves":17,"./pgnParser":19,"./updates":23}],19:[function(require,module,exports){
+},{"./moves":18,"./pgnParser":20,"./updates":24}],20:[function(require,module,exports){
 'use strict';
 
 var CHARCODE_A = 'a'.charCodeAt(0);
@@ -3224,7 +3255,7 @@ module.exports = {
     parsePgnMove: parsePgnMove
 };
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 'use strict';
 
 var asciiToExtended = {
@@ -3255,7 +3286,7 @@ module.exports = {
     pieceToUTF8: pieceToUTF8
 };
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 var piece = require('./piece');
 var colors = require('colors');
@@ -3389,7 +3420,7 @@ module.exports = {
     clone: clone
 };
 
-},{"./piece":20,"colors":5,"underscore-plus":13}],22:[function(require,module,exports){
+},{"./piece":21,"colors":5,"underscore-plus":13}],23:[function(require,module,exports){
 'use strict';
 
 var moves = require('./moves');
@@ -3413,7 +3444,7 @@ module.exports = {
     getGameStatus: getGameStatus
 };
 
-},{"./moves":17}],23:[function(require,module,exports){
+},{"./moves":18}],24:[function(require,module,exports){
 'use strict';
 
 var positions = require('./position');
@@ -3538,7 +3569,7 @@ module.exports = {
     applyMove: applyMove
 };
 
-},{"./coordinates":15,"./moves-pieces":16,"./position":21}],24:[function(require,module,exports){
+},{"./coordinates":15,"./moves-pieces":17,"./position":22}],25:[function(require,module,exports){
 'use strict';
 
 var position = require('./chess/position');
@@ -3546,6 +3577,7 @@ var moves = require('./chess/moves');
 var updates = require('./chess/updates');
 var pgn = require('./chess/pgn');
 var status = require('./chess/status');
+var locator = require('./chess/locator');
 
 var chessRules = {
     getInitialPosition: position.getInitialPosition,
@@ -3556,10 +3588,11 @@ var chessRules = {
     applyDiffs: updates.applyDiffs,
     pgnToMove: pgn.pgnToMove,
     moveToPgn: pgn.moveToPgn,
-    getGameStatus: status.getGameStatus
+    getGameStatus: status.getGameStatus,
+    findPiece: locator.findPiece
 };
 
 module.exports = chessRules;
 
-},{"./chess/moves":17,"./chess/pgn":18,"./chess/position":21,"./chess/status":22,"./chess/updates":23}]},{},[24])(24)
+},{"./chess/locator":16,"./chess/moves":18,"./chess/pgn":19,"./chess/position":22,"./chess/status":23,"./chess/updates":24}]},{},[25])(25)
 });
