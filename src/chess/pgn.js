@@ -102,7 +102,9 @@ function moveToPgn(position, move) {
         }
     }
 
-    if (position.board[move.dst] != null) {
+    var dx = move.dst % 8 - move.src % 8;
+
+    if (position.board[move.dst] != null || (piece.type == 'P' && dx != 0)) {
         if (pgn == '' && piece.type == 'P') {
             pgn += src[0];
         }
@@ -116,7 +118,8 @@ function moveToPgn(position, move) {
 
     // Pawn promotion
     if (piece.type == 'P' && (move.dst < 8 || move.dst > 56)) {
-        pgn += '=Q';
+        var promotionType = move.promotionType ? move.promotionType : 'Q';
+        pgn += '=' + promotionType;
     }
 
     // Check
