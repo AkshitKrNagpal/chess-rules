@@ -42,9 +42,14 @@ describe('pgn parser module', function () {
         assert.equal(fields.checking, true);
     });
 
-    it('must parse promotion piece type', function () {
+    it('must parse promotion to queen', function () {
         var fields = parser.parsePgnMove("e8=Q");
         assert.equal(fields.promotion, "Q");
+    });
+
+    it('must parse promotion to queen', function () {
+        var fields = parser.parsePgnMove("e8=N");
+        assert.equal(fields.promotion, "N");
     });
 
     it('must parse checkmate indicator', function () {

@@ -33,7 +33,8 @@ function computeDiffs(position, move) {
     }
 
     if (position.board[move.src].type == 'P' && (dst.y == 0 || dst.y == 7)) {
-        diffs.push({action: 'promote', src: move.dst});
+        var promotedPiece = move.promotionType ? move.promotionType : 'Q';
+        diffs.push({action: 'promote', src: move.dst, promotionType: promotedPiece});
     }
 
     if (position.board[move.src].type == 'K') {
@@ -102,7 +103,7 @@ function applyDiffs(position, diffs) {
         } else if (diff.action === 'updateCheckFlag') {
             targetPosition.check = diff.value;
         } else if (diff.action === 'promote') {
-            targetPosition.board[diff.src].type = 'Q';
+            targetPosition.board[diff.src].type = diff.promotionType;
         }
     });
 

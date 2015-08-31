@@ -54,6 +54,10 @@ function pgnToMove(position, pgnMove) {
 
             if (pgnFields.src != null && pgnFields.dst != null) {
                 move = {src: pgnFields.src, dst: pgnFields.dst};
+
+                if (pgnFields.promotion) {
+                    move.promotionType = pgnFields.promotion;
+                }
             }
         }
     }

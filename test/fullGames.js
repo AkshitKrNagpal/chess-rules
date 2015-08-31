@@ -7,9 +7,10 @@ function playMoves(position, moves) {
     for (var moveIndex = 0; moveIndex < moves.length; moveIndex++) {
         var pgn = moves[moveIndex];
         var move = chessRules.pgnToMove(position, pgn);
-        position = chessRules.applyMove(position, move);
+        //var pgnBack = chessRules.moveToPgn(position, move);
+        //assert.equal(pgnBack, pgn);
 
-        //console.log(pgn + " -> \n" + chessRules.positionToString(position, true));
+        position = chessRules.applyMove(position, move);
     }
 
     return position;
@@ -100,5 +101,17 @@ describe('single game with', function () {
         assert.equal(chessRules.getAvailableMoves(position).length, 0);
         assert.equal(position.check, true);
         assert.equal(chessRules.getGameStatus(position), "BLACKWON");
+    });
+
+    it('A pawn promotion to queen.', function () {
+        var position = chessRules.getInitialPosition();
+        position = playMoves(position, ['e4', 'd5', 'e5', 'd4', 'e6', 'd3', 'exf7+', 'Kd7', 'fxg8=Q']);
+        assert.equal(position.board[62].type, 'Q');
+    });
+
+    it('A pawn promotion to knight.', function () {
+        var position = chessRules.getInitialPosition();
+        position = playMoves(position, ['e4', 'd5', 'e5', 'd4', 'e6', 'd3', 'exf7+', 'Kd7', 'fxg8=N']);
+        assert.equal(position.board[62].type, 'N');
     });
 });
