@@ -20,7 +20,22 @@ function findPiece(position, pieceType, pieceSide) {
     return result;
 }
 
-function getAvailableMoves(position) {
+function getAvailableMoves(position, ignorePat) {
+
+    if (ignorePat != true) {
+        var pieceCount = 0;
+
+        position.board.forEach(function (piece) {
+            if (piece != null) {
+                pieceCount += 1;
+            }
+        });
+
+        // Only two kings left is a PAT situation
+        if (pieceCount == 2) {
+            return [];
+        }
+    }
 
     var availableMoves = movesPieces.computeAllMoves(position);
 

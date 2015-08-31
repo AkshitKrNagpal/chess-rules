@@ -38,7 +38,7 @@ describe('moves module', function () {
         var position = createEmptyBoard();
         position.board[43] = {type: 'P', side: 'B'};
         position.board[36] = {type: 'P', side: 'W'};
-        var moves = chessRules.getAvailableMoves(position);
+        var moves = chessRules.getAvailableMoves(position, true);
         assert.equal(moves.length, 2);
     });
 
@@ -54,7 +54,7 @@ describe('moves module', function () {
         position.board[35] = {type: 'P', side: 'B'};
         position.board[36] = {type: 'P', side: 'W'};
         position.lastPawnMoveColumn = 3;
-        var moves = chessRules.getAvailableMoves(position);
+        var moves = chessRules.getAvailableMoves(position, true);
         assert.equal(moves.length, 2);
     });
 
@@ -106,7 +106,7 @@ describe('moves module', function () {
         var position = createEmptyBoard();
         position.board[0] = {type: 'K', side: 'W'};
         position.board[15] = {type: 'R', side: 'B'};
-        var moves = chessRules.getAvailableMoves(position);
+        var moves = chessRules.getAvailableMoves(position, true);
         assert.equal(moves.length, 2);
     });
 
@@ -114,7 +114,7 @@ describe('moves module', function () {
         var position = createEmptyBoard();
         position.board[0] = {type: 'K', side: 'W'};
         position.board[33] = {type: 'R', side: 'B'};
-        var moves = chessRules.getAvailableMoves(position);
+        var moves = chessRules.getAvailableMoves(position, true);
         assert.equal(moves.length, 1);
         assert.deepEqual(moves[0], {src: 0, dst: 8});
     });
