@@ -114,4 +114,11 @@ describe('single game with', function () {
         position = playMoves(position, ['e4', 'd5', 'e5', 'd4', 'e6', 'd3', 'exf7+', 'Kd7', 'fxg8=N']);
         assert.equal(position.board[62].type, 'N');
     });
+
+    it('a queen promotion which puts the opponent in check', function () {
+        playMoves(chessRules.getInitialPosition(), ['d4', 'Nf6', 'e4', 'Nh5', 'Nf3', 'c5', 'dxc5', 'f5', 'exf5', 'Kf7', 'Bc4+',
+            'Kf6', 'Qd4+', 'e5', 'Nxe5', 'g5', 'O-O', 'd6', 'Qxd6+', 'Be6', 'Qxe6+', 'Kg7', 'Qf7+', 'Kh6', 'Qg6+',
+            'hxg6', 'fxg6', 'Nc6', 'Nxc6', 'Qe7', 'Nxe7', 'Rc8', 'Nxc8', 'Bd6', 'Nxd6', 'Rf8', 'Nf5+', 'Rxf5', 'Nc3',
+            'Rxc5', 'Ne4', 'Rc7', 'g4', 'a6', 'gxh5', 'a5', 'Nxg5', 'Rf7', 'Nxf7+', 'Kxh5', 'g7', 'Kg6', 'g8+=Q', 'Kh5']);
+    });
 });
