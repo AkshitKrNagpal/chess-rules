@@ -124,7 +124,11 @@ function moveToPgn(position, move) {
 
     // Check
     if (chessMoves.isCurrentPlayerInCheck(nextPosition)) {
-        pgn += '+';
+        if (chessMoves.getAvailableMoves(nextPosition).length == 0) {
+            pgn += '#';   
+        }else {
+            pgn += '+';
+        }
     }
 
     return pgn;

@@ -182,10 +182,9 @@ describe('pgn module', function () {
 
         ['g4', 'e5', 'f4', 'Qh4#'].forEach(function (movetext) {
             var m = chessRules.pgnToMove(position, movetext);
-            // var p = chessRules.moveToPgn(position, m);
+            var p = chessRules.moveToPgn(position, m);
             position = chessRules.applyMove(position, m);
-            // TODO: Enable this assertion once issue #15 is fixed
-            // assert.equal(p, movetext);
+            assert.equal(p, movetext);
         });
 
         assert.notEqual(chessRules.getGameStatus(position), 'OPEN');
