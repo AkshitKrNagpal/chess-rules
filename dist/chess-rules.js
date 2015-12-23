@@ -684,7 +684,9 @@ function drainQueue() {
         currentQueue = queue;
         queue = [];
         while (++queueIndex < len) {
-            currentQueue[queueIndex].run();
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
         }
         queueIndex = -1;
         len = queue.length;
@@ -736,7 +738,6 @@ process.binding = function (name) {
     throw new Error('process.binding is not supported');
 };
 
-// TODO(shtylman)
 process.cwd = function () { return '/' };
 process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
@@ -3159,7 +3160,11 @@ function moveToPgn(position, move) {
 
     // Check
     if (chessMoves.isCurrentPlayerInCheck(nextPosition)) {
-        pgn += '+';
+        if (chessMoves.getAvailableMoves(nextPosition).length == 0) {
+            pgn += '#';   
+        }else {
+            pgn += '+';
+        }
     }
 
     return pgn;
