@@ -164,10 +164,37 @@ describe('pgn module', function () {
         assert.equal(chessRules.getGameStatus(position), 'OPEN');
     });
 
-    it('must a move to A1', function () {
+    it('must accept a move to A1', function () {
         var position = chessRules.getInitialPosition();
 
         ['a4', 'a5', 'Ra3', 'b6', 'Ra1'].forEach(function (movetext) {
+            var m = chessRules.pgnToMove(position, movetext);
+            var p = chessRules.moveToPgn(position, m);
+            position = chessRules.applyMove(position, m);
+            assert.equal(p, movetext);
+        });
+
+        assert.equal(chessRules.getGameStatus(position), 'OPEN');
+    });
+
+    it('must add a # to checkmate moves', function () {
+        var position = chessRules.getInitialPosition();
+
+        ['g4', 'e5', 'f4', 'Qh4#'].forEach(function (movetext) {
+            var m = chessRules.pgnToMove(position, movetext);
+            // var p = chessRules.moveToPgn(position, m);
+            position = chessRules.applyMove(position, m);
+            // TODO: Enable this assertion once issue #15 is fixed
+            // assert.equal(p, movetext);
+        });
+
+        assert.notEqual(chessRules.getGameStatus(position), 'OPEN');
+    });
+
+    it('must add a + to check moves', function () {
+        var position = chessRules.getInitialPosition();
+
+        ['e4', 'd5', 'Bb5+'].forEach(function (movetext) {
             var m = chessRules.pgnToMove(position, movetext);
             var p = chessRules.moveToPgn(position, m);
             position = chessRules.applyMove(position, m);
