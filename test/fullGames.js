@@ -4,13 +4,19 @@ var chessRules = require('../src/');
 
 
 function playMoves(position, moves) {
+    // Comments below may be removed to temporarily activate extra logs for debugging,
+    // But don't forget to remove them on the next commit.
+    
     for (var moveIndex = 0; moveIndex < moves.length; moveIndex++) {
         var pgn = moves[moveIndex];
+        // console.log('Moving: ', pgn);
         var move = chessRules.pgnToMove(position, pgn);
         //var pgnBack = chessRules.moveToPgn(position, move);
         //assert.equal(pgnBack, pgn);
 
         position = chessRules.applyMove(position, move);
+        // console.log('Moved: ', pgn);
+        // console.log(chessRules.positionToString(position));
     }
 
     return position;
@@ -40,7 +46,7 @@ describe('single game with', function () {
         assert.equal(position.board[28], null);
     });
 
-    it('White kingside castling', function () {
+    it('white kingside castling', function () {
         var position = chessRules.getInitialPosition();
         position = playMoves(position, ['e4', 'e5', 'Bb5', 'Nc6', 'Nf3', 'Nf6']);
         position = playMoves(position, ['O-O']);
@@ -49,7 +55,7 @@ describe('single game with', function () {
         assert.equal(position.board[6].type, 'K');
     });
 
-    it('Both queenside castlings', function () {
+    it('both queenside castlings', function () {
         var position = chessRules.getInitialPosition();
         position = playMoves(position, ['Nc3', 'Nc6', 'd4', 'd5', 'Bf4', 'Bf5', 'Qd3', 'Qd6']);
         position = playMoves(position, ['O-O-O']);
@@ -70,7 +76,7 @@ describe('single game with', function () {
         assert.equal(position.castlingFlags.B.Q, false);
     });
 
-    it('Rook move altering castling flags', function () {
+    it('rook move altering castling flags', function () {
         var position = chessRules.getInitialPosition();
         position = playMoves(position, ['e4', 'h5', 'Nf3', 'Rh6']);
         assert.equal(position.check, false);
@@ -80,14 +86,14 @@ describe('single game with', function () {
         assert.equal(position.castlingFlags.B.Q, true);
     });
 
-    it('A situation were the black king is in check', function () {
+    it('a situation were the black king is in check', function () {
         var position = chessRules.getInitialPosition();
         position = playMoves(position, ['e4', 'e5', 'd4', 'd5', 'Bb5+']);
         assert.equal(position.check, true);
         assert.equal(chessRules.getGameStatus(position), "OPEN");
     });
 
-    it('A short game leading to a white win.', function () {
+    it('a short game leading to a white win.', function () {
         var position = chessRules.getInitialPosition();
         position = playMoves(position, ['e4', 'e5', 'Bc4', 'Bc5', 'Qh5', 'Nf6', 'Qxf7#']);
         assert.equal(chessRules.getAvailableMoves(position).length, 0);
@@ -95,7 +101,7 @@ describe('single game with', function () {
         assert.equal(chessRules.getGameStatus(position), "WHITEWON");
     });
 
-    it('A short game leading to a black win.', function () {
+    it('a short game leading to a black win.', function () {
         var position = chessRules.getInitialPosition();
         position = playMoves(position, ['g4', 'e5', 'f4', 'Qh4#']);
         assert.equal(chessRules.getAvailableMoves(position).length, 0);
@@ -120,5 +126,9 @@ describe('single game with', function () {
             'Kf6', 'Qd4+', 'e5', 'Nxe5', 'g5', 'O-O', 'd6', 'Qxd6+', 'Be6', 'Qxe6+', 'Kg7', 'Qf7+', 'Kh6', 'Qg6+',
             'hxg6', 'fxg6', 'Nc6', 'Nxc6', 'Qe7', 'Nxe7', 'Rc8', 'Nxc8', 'Bd6', 'Nxd6', 'Rf8', 'Nf5+', 'Rxf5', 'Nc3',
             'Rxc5', 'Ne4', 'Rc7', 'g4', 'a6', 'gxh5', 'a5', 'Nxg5', 'Rf7', 'Nxf7+', 'Kxh5', 'g7', 'Kg6', 'g8+=Q', 'Kh5']);
+    });
+    
+    it('a queen promotion while taking a piece that puts opponent in check', function() {
+        playMoves(chessRules.getInitialPosition(), ["e4","Nc6","Nc3","Nf6","Nf3","d5","d4","Nxe4","Nxe4","dxe4","Bh6","gxh6","Ba6","exf3","Qd3","fxg2","Qxh7","gxh1+=Q","Ke2"]);
     });
 });
