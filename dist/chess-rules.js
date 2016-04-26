@@ -3128,13 +3128,27 @@ function moveToPgn(position, move) {
     var src = coordToName(move.src);
 
     if (possibleSources.length > 1) {
-        var s1 = coordToName(possibleSources[0]);
-        var s2 = coordToName(possibleSources[1]);
+        var shared0 = 0;
+        var shared1 = 0;
 
-        if (s1[0] == s2[0]) {
+        possibleSources.forEach(function (possibleSource) {
+            var name = coordToName(possibleSource);
+
+            if (src[0] == name[0]) {
+                shared0 += 1;
+            }
+
+            if (src[1] == name[1]) {
+                shared1 += 1;
+            }
+        });
+
+        if (shared0 == 1) {
+            pgn += src[0];
+        } else if (shared1 == 1) {
             pgn += src[1];
         } else {
-            pgn += src[0];
+            pgn += src;
         }
     }
 
@@ -3161,8 +3175,8 @@ function moveToPgn(position, move) {
     // Check
     if (chessMoves.isCurrentPlayerInCheck(nextPosition)) {
         if (chessMoves.getAvailableMoves(nextPosition).length == 0) {
-            pgn += '#';   
-        }else {
+            pgn += '#';
+        } else {
             pgn += '+';
         }
     }

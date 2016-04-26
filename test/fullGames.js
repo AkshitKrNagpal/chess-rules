@@ -133,30 +133,21 @@ describe('single game with', function () {
             "Nxe4", "dxe4", "Bh6", "gxh6", "Ba6", "exf3", "Qd3", "fxg2", "Qxh7", "gxh1+=Q", "Ke2"]);
     });
 
-    it('two pieces on the same row that can reach the same square', function () {
-        playMoves(chessRules.getInitialPosition(), [
-            "e4", "Na6",
-            "e5", "f5",
-            "e6", "b5",
-            "exd7+", "Kf7",
-            "dxc8=Q", "f4",
-            "Qxd8", "g5",
-            "Qxa8", "g4",
-            "Qd5+", "Ke8",
-            "Qxg8", "Nc5",
-            "Qxh8", "Nb3",
-            "Qxh7", "c6",
-            "cxb3", "e6",
-            "d4", "Kd8",
-            "d5", "Bh6",
-            "d6", "c5",
-            "Qxh6", "a6",
-            "d7", "g3",
-            "Qg7", "gxh2",
-            "Qf8+", "Kc7",
-            "d8=Q+", "Kc6",
-            "Q8d6+"
+    it('three pieces on the same row/col that can reach the same square', function () {
+        var position = playMoves(chessRules.getInitialPosition(), [
+            "e4", "Na6", "e5", "f5", "e6", "b5", "exd7+", "Kf7", "dxc8=Q", "f4", "Qxd8", "g5",
+            "Qxa8", "g4", "Qd5+", "Ke8", "Qxg8", "Nc5", "Qxh8", "Nb3", "Qxh7", "c6", "cxb3", "e6",
+            "d4", "Kd8", "d5", "Bh6", "d6", "c5", "Qxh6", "a6", "d7", "g3", "Qg7", "gxh2", "Qf8+", "Kc7",
+            "d8=Q+", "Kc6"
         ]);
+
+        assert.equal(chessRules.pgnToMove(position, "Qfd6+").src, 61);
+        assert.equal(chessRules.pgnToMove(position, "Qdd6+").src, 59);
+        assert.equal(chessRules.pgnToMove(position, "Q1d6+").src, 3);
+
+        assert.equal(chessRules.moveToPgn(position, {src: 61, dst: 43}), "Qfd6+");
+        assert.equal(chessRules.moveToPgn(position, {src: 59, dst: 43}), "Qd8d6+");
+        assert.equal(chessRules.moveToPgn(position, {src: 3, dst: 43}), "Q1d6+");
     });
 
 });
