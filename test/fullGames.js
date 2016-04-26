@@ -6,7 +6,7 @@ var chessRules = require('../src/');
 function playMoves(position, moves) {
     // Comments below may be removed to temporarily activate extra logs for debugging,
     // But don't forget to remove them on the next commit.
-    
+
     for (var moveIndex = 0; moveIndex < moves.length; moveIndex++) {
         var pgn = moves[moveIndex];
         // console.log('Moving: ', pgn);
@@ -127,8 +127,36 @@ describe('single game with', function () {
             'hxg6', 'fxg6', 'Nc6', 'Nxc6', 'Qe7', 'Nxe7', 'Rc8', 'Nxc8', 'Bd6', 'Nxd6', 'Rf8', 'Nf5+', 'Rxf5', 'Nc3',
             'Rxc5', 'Ne4', 'Rc7', 'g4', 'a6', 'gxh5', 'a5', 'Nxg5', 'Rf7', 'Nxf7+', 'Kxh5', 'g7', 'Kg6', 'g8+=Q', 'Kh5']);
     });
-    
-    it('a queen promotion while taking a piece that puts opponent in check', function() {
-        playMoves(chessRules.getInitialPosition(), ["e4","Nc6","Nc3","Nf6","Nf3","d5","d4","Nxe4","Nxe4","dxe4","Bh6","gxh6","Ba6","exf3","Qd3","fxg2","Qxh7","gxh1+=Q","Ke2"]);
+
+    it('a queen promotion while taking a piece that puts opponent in check', function () {
+        playMoves(chessRules.getInitialPosition(), ["e4", "Nc6", "Nc3", "Nf6", "Nf3", "d5", "d4", "Nxe4",
+            "Nxe4", "dxe4", "Bh6", "gxh6", "Ba6", "exf3", "Qd3", "fxg2", "Qxh7", "gxh1+=Q", "Ke2"]);
     });
+
+    it('two pieces on the same row that can reach the same square', function () {
+        playMoves(chessRules.getInitialPosition(), [
+            "e4", "Na6",
+            "e5", "f5",
+            "e6", "b5",
+            "exd7+", "Kf7",
+            "dxc8=Q", "f4",
+            "Qxd8", "g5",
+            "Qxa8", "g4",
+            "Qd5+", "Ke8",
+            "Qxg8", "Nc5",
+            "Qxh8", "Nb3",
+            "Qxh7", "c6",
+            "cxb3", "e6",
+            "d4", "Kd8",
+            "d5", "Bh6",
+            "d6", "c5",
+            "Qxh6", "a6",
+            "d7", "g3",
+            "Qg7", "gxh2",
+            "Qf8+", "Kc7",
+            "d8=Q+", "Kc6",
+            "Q8d6+"
+        ]);
+    });
+
 });
