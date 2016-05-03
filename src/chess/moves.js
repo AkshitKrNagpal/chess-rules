@@ -65,14 +65,23 @@ function getAvailableMoves(position, ignorePat) {
 
         var kingThreat = isMoveLeadingToThreat(move, 'K', position.turn);
 
+
         // Kingside castling
         if (position.board[move.src].type == 'K' && delta.x == 2) {
-            kingThreat = kingThreat || isMoveLeadingToThreat({src: move.src, dst: move.src + 1}, 'K', position.turn)
+            kingThreat = kingThreat || position.check ||
+                isMoveLeadingToThreat({
+                    src: move.src,
+                    dst: move.src + 1
+                }, 'K', position.turn)
         }
 
         // Queenside castling
         if (position.board[move.src].type == 'K' && delta.x == -2) {
-            kingThreat = kingThreat || isMoveLeadingToThreat({src: move.src, dst: move.src - 1}, 'K', position.turn)
+            kingThreat = kingThreat || position.check ||
+                isMoveLeadingToThreat({
+                    src: move.src,
+                    dst: move.src - 1
+                }, 'K', position.turn)
         }
 
         if (!kingThreat) {

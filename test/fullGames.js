@@ -150,4 +150,29 @@ describe('single game with', function () {
         assert.equal(chessRules.moveToPgn(position, {src: 3, dst: 43}), "Q1d6+");
     });
 
+    it('a king that would rock but is in check', function () {
+        var position = playMoves(chessRules.getInitialPosition(), [
+            "e4", "Nc6",
+            "e5", "Nxe5",
+            "d4", "Nc6",
+            "d5", "Ne5",
+            "d6", "cxd6",
+            "Bb5", "Nf6",
+            "Bg5", "Qb6",
+            "Qxd6", "Qxd6",
+            "Nf3", "Nxf3+",
+            "gxf3", "Qe5+"
+        ]);
+
+        var hasCastlingMove = false;
+        chessRules.getAvailableMoves(position).forEach(function (m) {
+            if (m.src === 4 && m.dst === 6) {
+                hasCastlingMove = true;
+            }
+        });
+
+        assert.equal(hasCastlingMove, false);
+
+    });
+
 });
