@@ -22,7 +22,6 @@
   ],
   "main": "./src",
   "dependencies": {
-    "colors": "^1.1.2",
     "underscore-plus": "^1.6.6"
   },
   "devDependencies": {

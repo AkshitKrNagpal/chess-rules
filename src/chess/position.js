@@ -1,12 +1,5 @@
 'use strict';
 var piece = require('./piece');
-var colors = require('colors');
-colors.setTheme({
-    BW: ['black', 'bgWhite'],
-    BB: ['black', 'bgMagenta'],
-    WW: ['white', 'bgWhite'],
-    WB: ['white', 'bgMagenta']
-});
 var _ = require('underscore-plus');
 
 function clone(position) {
